@@ -1,0 +1,37 @@
+// src/App.tsx
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/auth/LoginPage';
+import RoleSelectionPage from './pages/auth/RoleSelectionPage';
+import SkillSelectionPage from './pages/auth/SkillSelectionPage';
+import ProfileSetupPage from './pages/auth/ProfileSetupPage';
+import DashboardPage from './pages/dashboard/DashboardPage';
+import ProfileCompletionPage from './pages/auth/ProfileCompletionPage';
+
+const App: React.FC = () => {
+  return (
+    <Router>
+      <div className="App">
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/role-selection" element={<RoleSelectionPage />} />
+          <Route path="/skill-selection" element={<SkillSelectionPage />} />
+          <Route path="/profile-setup" element={<ProfileSetupPage />} />
+          // In App.tsx or your routing setup
+<Route path="/profile-completion" element={<ProfileCompletionPage />} />
+          
+          {/* Protected Routes */}
+          <Route path="/dashboard" element={<DashboardPage />} />
+          
+          {/* Redirect unknown routes to home */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </div>
+    </Router>
+  );
+};
+
+export default App;
