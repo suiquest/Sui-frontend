@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { Search, Filter, ChevronRight, MessageCircle } from 'lucide-react';
+import { Search, Filter, ChevronRight } from 'lucide-react';
+import DashboardNavbar from '../../components/common/DashboardNavbar';
+import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 interface JobListing {
   id: string;
@@ -22,6 +25,12 @@ interface RecentActivity {
   avatar: string;
 }
 
+interface UserProfile {
+  name: string;
+  role: string;
+  avatar?: string;
+}
+
 interface ProfileData {
   name: string;
   role: string;
@@ -29,14 +38,24 @@ interface ProfileData {
   opportunitiesListed: number;
 }
 
+interface DashboardPageProps {
+  userProfile: UserProfile;
+}
+
 const DashboardPage: React.FC = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const userProfile = location.state?.userProfile || { 
+    name: 'User', 
+    role: 'User' 
+  };
+
   const [searchTerm, setSearchTerm] = useState('');
   const [activeFilter, setActiveFilter] = useState('All');
   
-  // Dynamic profile data
   const [profile] = useState<ProfileData>({
-    name: 'Bilal S.',
-    role: 'Bounty Hunter',
+    name: userProfile.name,
+    role: userProfile.role,
     totalEarned: '0 USD',
     opportunitiesListed: 10
   });
@@ -47,7 +66,7 @@ const DashboardPage: React.FC = () => {
   const jobListings: JobListing[] = [
     {
       id: '1',
-      title: 'Share Your Magic Eden Discovery Story',
+      title: ' Discovery Story',
       company: 'Magic Eden',
       description: 'Looking for a skilled figma designer to design 4 pages good things is we have reference and all thought process is already figured Out! we only need someone who is very good with pixelation components design and poping colours we could use AI',
       bounty: 148,
@@ -97,33 +116,18 @@ const DashboardPage: React.FC = () => {
     return matchesSearch && matchesFilter;
   });
 
+  const handleBountyClick = (bountyId: string) => {
+    navigate(`/dashboard/bounty/${bountyId}`, {
+      state: {
+        bounty: jobListings.find(job => job.id === bountyId)
+      }
+    });
+  };
+
   return (
     <div className="min-h-screen bg-slate-900 text-white">
       {/* Header */}
-      <header className="bg-slate-800 border-b border-slate-700">
-        <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-6">
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 rounded bg-blue-600 flex items-center justify-center">
-                <span className="text-white text-xs font-bold">S</span>
-              </div>
-              <span className="font-semibold text-white">Sui Quest</span>
-            </div>
-            <nav className="flex items-center gap-6 text-sm text-gray-300">
-              <a href="#" className="hover:text-white">Discover</a>
-              <a href="#" className="hover:text-white">Search</a>
-              <a href="#" className="hover:text-white">Leaderboard</a>
-            </nav>
-          </div>
-          <div className="flex items-center gap-3">
-            <span className="text-sm text-gray-300">{profile.name}</span>
-            <span className="text-sm text-gray-300">• {profile.role}</span>
-            <div className="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center">
-              <span className="text-white text-sm font-semibold">B</span>
-            </div>
-          </div>
-        </div>
-      </header>
+      <DashboardNavbar userProfile={userProfile} />
 
       <div className="max-w-7xl mx-auto px-6 py-6">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
@@ -171,7 +175,11 @@ const DashboardPage: React.FC = () => {
               <h2 className="text-lg font-medium text-white mb-4">Trending today</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
                 {[1, 2, 3, 4].map((i) => (
-                  <div key={i} className="bg-slate-800 rounded-lg p-4">
+                  <div 
+                    key={i} 
+                    className="bg-slate-800 rounded-lg p-4 cursor-pointer hover:bg-slate-700 transition-colors"
+                    onClick={() => handleBountyClick(i.toString())}
+                  >
                     <div className="flex items-start gap-3">
                       <div className="w-10 h-10 rounded bg-pink-600 flex items-center justify-center text-lg">
                         ME
@@ -203,9 +211,13 @@ const DashboardPage: React.FC = () => {
               <h2 className="text-lg font-medium text-white mb-4">Discover Bounties</h2>
               <p className="text-gray-400 text-sm mb-6">Posted 30 minutes ago</p>
               
-              <div className="space-y-4">
-                {filteredJobs.map((job) => (
-                  <div key={job.id} className="bg-slate-800 rounded-lg p-6">
+               <div className="space-y-4">
+                    {filteredJobs.map((job) => (
+                      <div 
+                        key={job.id} 
+                        className="bg-slate-800 rounded-lg p-6 cursor-pointer hover:bg-slate-700 transition-colors"
+                        onClick={() => handleBountyClick(job.id)}
+                      >
                     <div className="flex items-start gap-4">
                       <div className="w-10 h-10 rounded bg-gray-600 flex items-center justify-center text-xs font-bold text-white">
                         ORG

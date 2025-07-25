@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import ProgressionStatus from '../../components/common/ProgressionStatus';
 import BottomActions from '../../components/common/BottomActions';
 
-type AccountType = 'bounty-hunter' | 'funder' | null;
+type AccountType = 'Contributor' | 'Funder' | null;
 
 const RoleSelectionPage: React.FC = () => {
   const [selectedAccount, setSelectedAccount] = useState<AccountType>(null);
@@ -17,7 +17,11 @@ const RoleSelectionPage: React.FC = () => {
 
   const handleNext = () => {
     if (selectedAccount) {
-      navigate('/skill-selection');
+      if (selectedAccount === 'Contributor') {
+        navigate('/skill-selection', { state: { selectedRole: selectedAccount } });
+      } else if (selectedAccount === 'Funder') {
+        navigate('/organization-info', { state: { selectedRole: selectedAccount } });
+      }
     }
   };
 
@@ -33,29 +37,29 @@ const RoleSelectionPage: React.FC = () => {
             <div 
               className={`
                 pt-20 pb-5 px-2 rounded-lg border cursor-pointer transition-all
-                ${selectedAccount === 'bounty-hunter' 
+                ${selectedAccount === 'Contributor' 
                   ? 'border-blue-500 bg-slate-800' 
                   : 'border-slate-700 bg-slate-800 hover:border-slate-600'
                 }
               `}
-              onClick={() => setSelectedAccount('bounty-hunter')}
+              onClick={() => setSelectedAccount('Contributor')}
             >
               <div className="flex items-center justify-between mb-4">
                 <div className={`
                   w-6 h-6 rounded-full border-2 flex items-center justify-center
-                  ${selectedAccount === 'bounty-hunter' 
+                  ${selectedAccount === 'Contributor' 
                     ? 'border-blue-500 bg-blue-500' 
                     : 'border-slate-600'
                   }
                 `}>
-                  {selectedAccount === 'bounty-hunter' && (
+                  {selectedAccount === 'Contributor' && (
                     <div className="w-2 h-2 bg-white rounded-full"></div>
                   )}
                 </div>
               </div>
-              <h3 className="text-white text-xl font-semibold mb-2">Bounty Hunter</h3>
+              <h3 className="text-white text-xl font-semibold mb-2">Contributor</h3>
               <p className="text-gray-400 text-sm">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Step In. Build Proof. Get Rewarded.
               </p>
             </div>
 
@@ -63,29 +67,29 @@ const RoleSelectionPage: React.FC = () => {
             <div 
               className={`
                 pt-20 pb- px-2 rounded-lg border cursor-pointer transition-all
-                ${selectedAccount === 'funder' 
+                ${selectedAccount === 'Funder' 
                   ? 'border-blue-500 bg-slate-800' 
                   : 'border-slate-700 bg-slate-800 hover:border-slate-600'
                 }
               `}
-              onClick={() => setSelectedAccount('funder')}
+              onClick={() => setSelectedAccount('Funder')}
             >
               <div className="flex items-center justify-between">
                 <div className={`
                   w-6 h-6 rounded-full border-2 flex items-center justify-center
-                  ${selectedAccount === 'funder' 
+                  ${selectedAccount === 'Funder' 
                     ? 'border-blue-500 bg-blue-500' 
                     : 'border-slate-600'
                   }
                 `}>
-                  {selectedAccount === 'funder' && (
+                  {selectedAccount === 'Funder' && (
                     <div className="w-2 h-2 bg-white rounded-full"></div>
                   )}
                 </div>
               </div>
-              <h3 className="text-white text-xl font-semibold ">Funder</h3>
+              <h3 className="text-white text-xl font-semibold pt-4">Funder</h3>
               <p className="text-gray-400 text-sm">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Scale Faster with Trusted Contributors.
               </p>
             </div>
           </div>

@@ -13,8 +13,9 @@ const ProfileCompletionPage: React.FC = () => {
   const location = useLocation();
   
   // Get the firstName from navigation state, fallback to 'User' if not provided
-  const state = location.state as LocationState;
+  const state = location.state as LocationState & { userProfile?: any };
   const firstName = state?.firstName || 'User';
+  const userProfile = state?.userProfile;
 
   useEffect(() => {
     // Animate progress bar with multiple stages for more realistic effect
@@ -30,9 +31,9 @@ const ProfileCompletionPage: React.FC = () => {
       setProgress(75); // Final stage - about 75% filled as shown in image
     }, 1300);
 
-    // Auto-redirect after animation completes
+    // Auto-redirect with user profile data
     const redirectTimer = setTimeout(() => {
-      navigate('/dashboard');
+      navigate('/dashboard', { state: { userProfile } });
     }, 4500);
 
     return () => {
@@ -41,7 +42,7 @@ const ProfileCompletionPage: React.FC = () => {
       clearTimeout(timer3);
       clearTimeout(redirectTimer);
     };
-  }, [navigate]);
+  }, [navigate, userProfile]);
 
   return (
     <div className="min-h-screen bg-slate-900 flex flex-col relative">

@@ -1,6 +1,6 @@
 // src/pages/auth/ProfileSetupPage.tsx
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import ProgressionStatus from '../../components/common/ProgressionStatus';
 import BottomActions from '../../components/common/BottomActions';
 
@@ -12,6 +12,8 @@ interface ProfileFormData {
 }
 
 const ProfileSetupPage: React.FC = () => {
+  const location = useLocation();
+  const selectedRole = location.state?.selectedRole;
   const [formData, setFormData] = useState<ProfileFormData>({
     firstName: '',
     lastName: '',
@@ -39,11 +41,23 @@ const ProfileSetupPage: React.FC = () => {
   };
 
   const handleNext = () => {
-    // Handle profile completion
-    console.log('Profile data:', formData);
-    // Pass the user's first name to the completion page
+    
+    // Create user profile with role from role selection and name from form
+    const userProfile = {
+      name: `${formData.firstName} ${formData.lastName}`.trim() || 'User',
+      role: selectedRole === 'bounty-hunter' ? 'Bounty Hunter' : 
+            selectedRole === 'funder' ? 'Funder' : 
+            formData.role !== 'Unknown' ? formData.role : 'User'
+    };
+    
+    // Pass to completion page
     const firstName = formData.firstName.trim() || 'User';
-    navigate('/profile-completion', { state: { firstName } });
+    navigate('/profile-completion', { 
+      state: { 
+        firstName,
+        userProfile 
+      } 
+    });
   };
 
   return (

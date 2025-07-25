@@ -1,6 +1,7 @@
 // sui-quest\src\components\common\Navbar.tsx
 import React from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import Logo from '/src/assets/logo.png'
 
 interface NavbarProps {
   showAuthButton?: boolean;
@@ -33,16 +34,17 @@ const Navbar: React.FC<NavbarProps> = ({
     <header className="flex items-center justify-between px-42 py-4 bg-slate-900">
       {/* Logo - Left */}
       <Link to="/" className="flex items-center space-x-2">
-        <div className="w-8 h-8 bg-blue-500 rounded flex items-center justify-center">
+        {/* <div className="w-8 h-8 bg-blue-500 rounded flex items-center justify-center">
           <span className="text-white font-bold text-sm">S</span>
         </div>
-        <span className="text-xl font-semibold text-white">Sui Quest</span>
+        <span className="text-xl font-semibold text-white">Sui Quest</span> */}
+        <img src={Logo} alt="Logo" style={{ width: 120 }} />
       </Link>
       
       {/* Navigation - Center */}
       <nav className="hidden md:flex items-center space-x-6">
         <Link 
-          to="/discover" 
+          to="/dashboard" 
           className="text-gray-300 hover:text-white transition-colors"
         >
           Discover

@@ -8,6 +8,7 @@ import SkillSelectionPage from './pages/auth/SkillSelectionPage';
 import ProfileSetupPage from './pages/auth/ProfileSetupPage';
 import DashboardPage from './pages/dashboard/DashboardPage';
 import ProfileCompletionPage from './pages/auth/ProfileCompletionPage';
+import BountyDetailPage from './pages/dashboard/BountyDetailPage';
 
 const App: React.FC = () => {
   return (
@@ -25,6 +26,7 @@ const App: React.FC = () => {
           
           {/* Protected Routes */}
           <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/dashboard/bounty/:id" element={<BountyDetailPage />} />
           
           {/* Redirect unknown routes to home */}
           <Route path="*" element={<Navigate to="/" replace />} />
