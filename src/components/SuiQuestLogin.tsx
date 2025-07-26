@@ -1,8 +1,5 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-<<<<<<< HEAD
-
-=======
 import Logo from '/src/assets/logo.png'
 import { ConnectButton } from "@mysten/dapp-kit";
 
@@ -10,7 +7,6 @@ interface SuiQuestLoginProps {
   onSignIn: () => void;
 }
 
->>>>>>> f221365e94c82676e0a6d727e514ac83125de4f7
 
 
 const SuiQuestLogin: React.FC<SuiQuestLoginProps> = () => {
@@ -49,10 +45,6 @@ const SuiQuestLogin: React.FC<SuiQuestLoginProps> = () => {
           </a>
         </nav>
 
-<<<<<<< HEAD
-       
-=======
-        {/* How it works button - Right */}
         <ConnectButton />
         {/* <button 
         onClick={handleGoogleSignIn}
@@ -60,7 +52,6 @@ const SuiQuestLogin: React.FC<SuiQuestLoginProps> = () => {
           Connect with wallet
         </button> */}
 >>>>>>> f221365e94c82676e0a6d727e514ac83125de4f7
-      </header>
 
       {/* Main Content */}
       <main className="flex items-center justify-center min-h-[calc(100vh-80px)] px-6">
