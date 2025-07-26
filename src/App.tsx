@@ -9,6 +9,8 @@ import ProfileSetupPage from './pages/auth/ProfileSetupPage';
 import DashboardPage from './pages/dashboard/DashboardPage';
 import ProfileCompletionPage from './pages/auth/ProfileCompletionPage';
 import BountyDetailPage from './pages/dashboard/BountyDetailPage';
+import ManageListingPage from './pages/dashboard/ManageListingPage';
+import ListingDetailPage from './pages/dashboard/ListingDetailPage';
 
 const App: React.FC = () => {
   return (
@@ -27,6 +29,8 @@ const App: React.FC = () => {
           {/* Protected Routes */}
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/dashboard/bounty/:id" element={<BountyDetailPage />} />
+          <Route path="/dashboard/manage-listing" element={<ManageListingPage />} />
+          <Route path="/dashboard/listing-detail" element={<ListingDetailPage />} />
           
           {/* Redirect unknown routes to home */}
           <Route path="*" element={<Navigate to="/" replace />} />
