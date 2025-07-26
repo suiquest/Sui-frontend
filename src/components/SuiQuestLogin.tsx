@@ -1,7 +1,7 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+
 import Logo from '/src/assets/logo.png'
-import { ConnectButton } from "@mysten/dapp-kit";
+import { ConnectButton, useCurrentAccount } from "@mysten/dapp-kit";
 
 interface SuiQuestLoginProps {
   onSignIn: () => void;
@@ -10,12 +10,12 @@ interface SuiQuestLoginProps {
 
 
 const SuiQuestLogin: React.FC<SuiQuestLoginProps> = () => {
-  const navigate = useNavigate();
+  const account = useCurrentAccount();
 
-  const handleGoogleSignIn = () => {
-    // Navigate to role selection after "authentication"
-    navigate('/role-selection');
-  };
+  // const handleGoogleSignIn = () => {
+  //   // Navigate to role selection after "authentication"
+  //   navigate('/role-selection');
+  // };
 
   // const handleEmailSignIn = () => {
   //   // Navigate to role selection after "authentication"
@@ -51,7 +51,7 @@ const SuiQuestLogin: React.FC<SuiQuestLoginProps> = () => {
         className="bg-[#4099ff] hover:bg-blue-700 px-4 py-2 rounded-md text-sm font-medium transition-colors">
           Connect with wallet
         </button> */}
->>>>>>> f221365e94c82676e0a6d727e514ac83125de4f7
+      </header>
 
       {/* Main Content */}
       <main className="flex items-center justify-center min-h-[calc(100vh-80px)] px-6">
@@ -63,12 +63,39 @@ const SuiQuestLogin: React.FC<SuiQuestLoginProps> = () => {
 
           <div className="space-y-4">
             {/* Primary Google Sign-in Button */}
-            <button
-              onClick={handleGoogleSignIn}
-              className="w-full bg-[#4099ff] hover:bg-[#4099ff] text-white font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2"
-            >
-              <span>Connect with wallet</span>
-            </button>
+            { !account?.address && (
+              <ConnectButton
+                className="w-full bg-[#4099ff] hover:bg-[#4099ff] text-white font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2"
+              >
+                <span>Connect with wallet</span>
+              </ConnectButton>
+            )}
+
+            
+          </div>
+
+          {/* Footer */}
+          <div className="mt-8 text-center text-sm text-gray-400">
+            <p>
+              By using this website, you agree to our{' '}
+              <a href="#" className="text-blue-400 hover:text-blue-300">
+                Terms of Use
+              </a>{' '}
+              and our{' '}
+              <a href="#" className="text-blue-400 hover:text-blue-300">
+                Privacy Policy
+              </a>
+              .
+            </p>
+            <p className="mt-2">
+              Need help? Reach out to us at{' '}
+              <a
+                href="mailto:support@suiquest.com"
+                className="text-blue-400 hover:text-blue-300"
+              >
+                support@suiquest.com
+              </a>
+            </p>
           </div>
         </div>
       </main>
