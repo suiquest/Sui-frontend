@@ -1,5 +1,5 @@
 import React from 'react';
-import Logo from '/src/assets/logo.png';
+import Logo from '/src/assets/Frame 10.svg';
 
 interface UserProfile {
   name?: string;
@@ -23,7 +23,8 @@ const DashboardNavbar: React.FC<DashboardNavbarProps> = ({ userProfile }) => {
         <div className="flex items-center gap-6">
           {/* Logo */}
           <div className="flex items-center gap-2">
-            <img src={Logo} alt="Logo" style={{ width: 120 }} />
+            <img src={Logo} alt="Logo" style={{ width:50 }} />
+            <span>Sui Quest</span>
           </div>
           
           {/* Navigation Links */}

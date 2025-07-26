@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Logo from '/src/assets/logo.png'
+import Logo from '/src/assets/Frame 10.svg'
 
 interface SuiQuestLoginProps {}
 
@@ -23,7 +23,8 @@ const SuiQuestLogin: React.FC<SuiQuestLoginProps> = () => {
       <header className="flex items-center justify-between px-42 py-4">
         {/* Logo - Left */}
         <div className="flex items-center space-x-2">
-          <img src={Logo} alt="Logo" style={{ width: 120 }} />
+          <img src={Logo} alt="Logo" style={{ width: 50 }} />
+          <span>Sui Quest</span>
         </div>
         
         {/* Navigation - Center */}
@@ -39,12 +40,8 @@ const SuiQuestLogin: React.FC<SuiQuestLoginProps> = () => {
           </a>
         </nav>
 
-        {/* How it works button - Right */}
-        <button 
-        onClick={handleGoogleSignIn}
-        className="bg-[#4099ff] hover:bg-blue-700 px-4 py-2 rounded-md text-sm font-medium transition-colors">
-          Connect with wallet
-        </button>
+        {/* Right side placeholder */}
+        <div></div>
       </header>
 
       {/* Main Content */}
@@ -61,35 +58,8 @@ const SuiQuestLogin: React.FC<SuiQuestLoginProps> = () => {
               onClick={handleGoogleSignIn}
               className="w-full bg-[#4099ff] hover:bg-[#4099ff] text-white font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2"
             >
-              
               <span>Connect with wallet</span>
             </button>
-
-            
-          </div>
-
-          {/* Footer */}
-          <div className="mt-8 text-center text-sm text-gray-400">
-            <p>
-              By using this website, you agree to our{' '}
-              <a href="#" className="text-blue-400 hover:text-blue-300">
-                Terms of Use
-              </a>{' '}
-              and our{' '}
-              <a href="#" className="text-blue-400 hover:text-blue-300">
-                Privacy Policy
-              </a>
-              .
-            </p>
-            <p className="mt-2">
-              Need help? Reach out to us at{' '}
-              <a
-                href="mailto:support@suiquest.com"
-                className="text-blue-400 hover:text-blue-300"
-              >
-                support@suiquest.com
-              </a>
-            </p>
           </div>
         </div>
       </main>
