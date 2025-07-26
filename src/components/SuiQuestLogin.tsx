@@ -1,8 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Logo from '/src/assets/logo.png'
+import { ConnectButton } from "@mysten/dapp-kit";
 
-interface SuiQuestLoginProps {}
+interface SuiQuestLoginProps {
+  onSignIn: () => void;
+}
+
+
 
 const SuiQuestLogin: React.FC<SuiQuestLoginProps> = () => {
   const navigate = useNavigate();
@@ -12,10 +17,10 @@ const SuiQuestLogin: React.FC<SuiQuestLoginProps> = () => {
     navigate('/role-selection');
   };
 
-  const handleEmailSignIn = () => {
-    // Navigate to role selection after "authentication"
-    navigate('/role-selection');
-  };
+  // const handleEmailSignIn = () => {
+  //   // Navigate to role selection after "authentication"
+  //   navigate('/role-selection');
+  // };
 
   return (
     <div className="min-h-screen bg-slate-900 text-white">
@@ -40,11 +45,12 @@ const SuiQuestLogin: React.FC<SuiQuestLoginProps> = () => {
         </nav>
 
         {/* How it works button - Right */}
-        <button 
+        <ConnectButton />
+        {/* <button 
         onClick={handleGoogleSignIn}
         className="bg-[#4099ff] hover:bg-blue-700 px-4 py-2 rounded-md text-sm font-medium transition-colors">
           Connect with wallet
-        </button>
+        </button> */}
       </header>
 
       {/* Main Content */}

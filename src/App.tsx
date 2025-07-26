@@ -24,7 +24,7 @@ const App: React.FC = () => {
           <Route path="/skill-selection" element={<SkillSelectionPage />} />
           <Route path="/profile-setup" element={<ProfileSetupPage />} />
           // In App.tsx or your routing setup
-<Route path="/profile-completion" element={<ProfileCompletionPage />} />
+          <Route path="/profile-completion" element={<ProfileCompletionPage />} />
           
           {/* Protected Routes */}
           <Route path="/dashboard" element={<DashboardPage />} />
