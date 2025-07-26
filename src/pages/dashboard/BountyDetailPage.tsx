@@ -24,7 +24,7 @@ const SubmitBountyModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =
     onClose();
   };
 
-  if (!isOpen) return null;
+  if (!isOpen) return null; 
 
   return (
     <div className="fixed inset-0 flex items-start justify-end z-50">

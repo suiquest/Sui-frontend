@@ -31,11 +31,11 @@ const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <header className="flex items-center justify-between px-42 py-4 bg-slate-900">
+    <header className="flex items-center justify-between px-42 py-4 bg-transparent">
       {/* Logo - Left */}
       <Link to="/" className="flex items-center space-x-2">
         <img src={Logo} alt="Logo" style={{ width: 50 }} />
-        
+        <span className='font-bold text-white'>Sui Quest</span>
       </Link>
       
       {/* Navigation - Center */}
