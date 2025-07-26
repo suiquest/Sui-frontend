@@ -1,26 +1,24 @@
-import React from 'react';
-
-import Logo from '/src/assets/logo.png'
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Logo from '/src/assets/Frame 10.svg'
 import { ConnectButton, useCurrentAccount } from "@mysten/dapp-kit";
 
 interface SuiQuestLoginProps {
   onSignIn: () => void;
 }
 
-
-
 const SuiQuestLogin: React.FC<SuiQuestLoginProps> = () => {
   const account = useCurrentAccount();
+  const navigate = useNavigate();
 
-  // const handleGoogleSignIn = () => {
-  //   // Navigate to role selection after "authentication"
-  //   navigate('/role-selection');
-  // };
-
-  // const handleEmailSignIn = () => {
-  //   // Navigate to role selection after "authentication"
-  //   navigate('/role-selection');
-  // };
+  // Navigate to role selection when wallet is connected
+  useEffect(() => {
+    if (account?.address) {
+      // Store wallet address in localStorage
+      localStorage.setItem('walletAddress', account.address);
+      navigate('/role-selection');
+    }
+  }, [account, navigate]);
 
   return (
     <div className="min-h-screen bg-slate-900 text-white">
@@ -29,7 +27,7 @@ const SuiQuestLogin: React.FC<SuiQuestLoginProps> = () => {
         {/* Logo - Left */}
         <div className="flex items-center space-x-2">
           <img src={Logo} alt="Logo" style={{ width: 50 }} />
-          <span>Sui Quest</span>
+          <span className='text-bold'>Sui Quest</span>
         </div>
         
         {/* Navigation - Center */}
@@ -45,12 +43,7 @@ const SuiQuestLogin: React.FC<SuiQuestLoginProps> = () => {
           </a>
         </nav>
 
-        <ConnectButton />
-        {/* <button 
-        onClick={handleGoogleSignIn}
-        className="bg-[#4099ff] hover:bg-blue-700 px-4 py-2 rounded-md text-sm font-medium transition-colors">
-          Connect with wallet
-        </button> */}
+        <ConnectButton className='bg-[#4099ff]'/>
       </header>
 
       {/* Main Content */}
@@ -62,7 +55,7 @@ const SuiQuestLogin: React.FC<SuiQuestLoginProps> = () => {
           </div>
 
           <div className="space-y-4">
-            {/* Primary Google Sign-in Button */}
+            {/* Primary Connect Wallet Button */}
             { !account?.address && (
               <ConnectButton
                 className="w-full bg-[#4099ff] hover:bg-[#4099ff] text-white font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2"
@@ -70,8 +63,6 @@ const SuiQuestLogin: React.FC<SuiQuestLoginProps> = () => {
                 <span>Connect with wallet</span>
               </ConnectButton>
             )}
-
-            
           </div>
 
           {/* Footer */}

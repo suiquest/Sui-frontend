@@ -129,12 +129,30 @@ const DashboardPage: React.FC = () => {
     });
   };
 
-  // Load job listings from localStorage on component mount
+  // Load job listings from localStorage on component mount and merge with created bounties
   useEffect(() => {
     const savedJobs = localStorage.getItem('jobListings');
+    const myListings = localStorage.getItem('myListings');
+    
+    let allJobs = [];
+    
+    // Load existing job listings
     if (savedJobs) {
-      setJobListings(JSON.parse(savedJobs));
+      allJobs = JSON.parse(savedJobs);
     }
+    
+    // Merge with user's created listings
+    if (myListings) {
+      const userListings = JSON.parse(myListings);
+      // Add user listings that aren't already in the main list
+      userListings.forEach((listing: JobListing) => {
+        if (!allJobs.find((job: JobListing) => job.id === listing.id)) {
+          allJobs.unshift(listing); // Add to beginning
+        }
+      });
+    }
+    
+    setJobListings(allJobs);
   }, []);
 
   // Save job listings to localStorage whenever jobListings changes
@@ -157,7 +175,14 @@ const DashboardPage: React.FC = () => {
       avatar: bountyData.avatar
     };
 
+    // Update main job listings
     setJobListings(prev => [newBounty, ...prev]);
+    
+    // Also update myListings in localStorage
+    const existingMyListings = localStorage.getItem('myListings');
+    const myListings = existingMyListings ? JSON.parse(existingMyListings) : [];
+    const updatedMyListings = [newBounty, ...myListings];
+    localStorage.setItem('myListings', JSON.stringify(updatedMyListings));
   };
 
   const handleManageListingClick = () => {

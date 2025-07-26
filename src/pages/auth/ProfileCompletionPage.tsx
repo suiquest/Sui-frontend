@@ -18,22 +18,33 @@ const ProfileCompletionPage: React.FC = () => {
   const userProfile = state?.userProfile;
 
   useEffect(() => {
+    // Get wallet address from localStorage
+    const walletAddress = localStorage.getItem('walletAddress');
+    
     // Animate progress bar with multiple stages for more realistic effect
     const timer1 = setTimeout(() => {
-      setProgress(25); // First stage
+      setProgress(25);
     }, 300);
     
     const timer2 = setTimeout(() => {
-      setProgress(50); // Second stage
+      setProgress(50);
     }, 800);
     
     const timer3 = setTimeout(() => {
-      setProgress(75); // Final stage - about 75% filled as shown in image
+      setProgress(75);
     }, 1300);
 
-    // Auto-redirect with user profile data
+    // Auto-redirect with user profile data including wallet address
     const redirectTimer = setTimeout(() => {
-      navigate('/dashboard', { state: { userProfile } });
+      const profileWithWallet = {
+        ...userProfile,
+        walletAddress
+      };
+      
+      // Store complete profile in localStorage
+      localStorage.setItem('userProfile', JSON.stringify(profileWithWallet));
+      
+      navigate('/dashboard', { state: { userProfile: profileWithWallet } });
     }, 4500);
 
     return () => {
