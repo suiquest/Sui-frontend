@@ -20,9 +20,6 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.83.0
         version: 5.83.0(react@19.1.0)
-      client:
-        specifier: link:@mysten/sui/client
-        version: link:@mysten/sui/client
       lucide-react:
         specifier: ^0.525.0
         version: 0.525.0(react@19.1.0)
@@ -35,9 +32,6 @@ importers:
       react-router-dom:
         specifier: ^7.7.1
         version: 7.7.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      transactions:
-        specifier: link:@mysten/sui/client,@mysten/sui/transactions
-        version: link:@mysten/sui/client,@mysten/sui/transactions
     devDependencies:
       '@eslint/js':
         specifier: ^9.30.1
