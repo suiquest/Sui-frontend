@@ -1,7 +1,7 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+
 import Logo from '/src/assets/logo.png'
-import { ConnectButton } from "@mysten/dapp-kit";
+import { ConnectButton, useCurrentAccount } from "@mysten/dapp-kit";
 
 interface SuiQuestLoginProps {
   onSignIn: () => void;
@@ -10,12 +10,12 @@ interface SuiQuestLoginProps {
 
 
 const SuiQuestLogin: React.FC<SuiQuestLoginProps> = () => {
-  const navigate = useNavigate();
+  const account = useCurrentAccount();
 
-  const handleGoogleSignIn = () => {
-    // Navigate to role selection after "authentication"
-    navigate('/role-selection');
-  };
+  // const handleGoogleSignIn = () => {
+  //   // Navigate to role selection after "authentication"
+  //   navigate('/role-selection');
+  // };
 
   // const handleEmailSignIn = () => {
   //   // Navigate to role selection after "authentication"
@@ -63,13 +63,13 @@ const SuiQuestLogin: React.FC<SuiQuestLoginProps> = () => {
 
           <div className="space-y-4">
             {/* Primary Google Sign-in Button */}
-            <button
-              onClick={handleGoogleSignIn}
-              className="w-full bg-[#4099ff] hover:bg-[#4099ff] text-white font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2"
-            >
-              
-              <span>Connect with wallet</span>
-            </button>
+            { !account?.address && (
+              <ConnectButton
+                className="w-full bg-[#4099ff] hover:bg-[#4099ff] text-white font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2"
+              >
+                <span>Connect with wallet</span>
+              </ConnectButton>
+            )}
 
             
           </div>
