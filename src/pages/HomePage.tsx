@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, DollarSign, CheckCircle, Clock, Zap } from 'lucide-react';
+import { Heart, DollarSign, CheckCircle, Clock, } from 'lucide-react';
 import Layout from '../components/common/Layout';
 import Group1Image from '../assets/Group 1.png';
 import ContainerImage from '../assets/Container.png';
