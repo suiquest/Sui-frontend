@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Filter, ChevronRight } from 'lucide-react';
+import { Search, Filter} from 'lucide-react';
 import DashboardNavbar from '../../components/common/DashboardNavbar';
 import CreateBountyModal from '../../components/modals/CreateBountyModal';
 import WalletModal from '../../components/modals/WalletModal';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import Usdc from '../../assets/USDC.png'
 
 interface JobListing {
   id: string;
@@ -40,9 +41,9 @@ interface ProfileData {
   opportunitiesListed: number;
 }
 
-interface DashboardPageProps {
-  userProfile: UserProfile;
-}
+// interface DashboardPageProps {
+//   userProfile: UserProfile;
+// }
 
 const DashboardPage: React.FC = () => {
   const navigate = useNavigate();
@@ -280,7 +281,7 @@ const DashboardPage: React.FC = () => {
                     {filteredJobs.map((job) => (
                       <div 
                         key={job.id} 
-                        className="bg-slate-800 rounded-lg p-6 cursor-pointer hover:bg-slate-700 transition-colors"
+                        className="p-6 cursor-pointer hover:bg-slate-700 transition-colors"
                         onClick={() => handleBountyClick(job.id)}
                       >
                     <div className="flex items-start gap-4">
@@ -318,18 +319,16 @@ const DashboardPage: React.FC = () => {
           </div>
 
           {/* Sidebar */}
-          <div className="space-y-4">
+          <div className="space-y-4 pt-25">
             {/* Manage listing Card */}
             <div 
-              className="bg-blue-500 rounded-lg p-4 cursor-pointer hover:bg-blue-600 transition-all"
+              className="bg-blue-500 rounded-lg py-2 px-4 cursor-pointer hover:bg-blue-600 transition-all"
               onClick={handleManageListingClick}
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <span className="text-white font-medium">Manage listing</span>
-                  <div className="w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center">
-                    <span className="text-sm">👤</span>
-                  </div>
+                  
                 </div>
                 <div className="text-white">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -348,17 +347,16 @@ const DashboardPage: React.FC = () => {
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                      <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-                      </svg>
+                    <div className="w-10 h-10 flex items-center justify-center">
+                       <img src={Usdc} alt="usdc" />
                     </div>
                     <div>
                       <div className="text-white font-semibold">0</div>
                       <div className="text-gray-400 text-sm">Total Bounty Token</div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2 text-gray-400">
+                  <div className="flex items-center gap-2 text-gray-400 bg-[#101828] px-4 py-2 rounded-lg
+">
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
                     </svg>
@@ -374,17 +372,15 @@ const DashboardPage: React.FC = () => {
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                      <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-                      </svg>
+                    <div className="w-10 h-10 flex items-center justify-center">
+                       <img src={Usdc} alt="usdc" />
                     </div>
                     <div>
                       <div className="text-white font-semibold">0 USD</div>
                       <div className="text-gray-400 text-sm">Total Earning</div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2 text-gray-400">
+                  <div className="flex items-center gap-2 text-gray-400 bg-[#101828] px-4 py-2 rounded-lg ">
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
@@ -400,17 +396,15 @@ const DashboardPage: React.FC = () => {
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                      <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
+                    <div className="w-10 h-10  flex items-center justify-center">
+                      <img src={Usdc} alt="usdc" />
                     </div>
                     <div>
                       <div className="text-white font-semibold">10</div>
                       <div className="text-gray-400 text-sm">On-going Bounties</div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2 text-gray-400">
+                  <div className="flex items-center gap-2 text-gray-400 bg-[#101828] px-4 py-2 rounded-lg">
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                     </svg>
@@ -443,6 +437,7 @@ const DashboardPage: React.FC = () => {
                       </div>
                     </div>
                     <div className="flex items-center gap-1 text-sm">
+                    <img src={Usdc} alt='usdc' />
                       <span className="text-blue-400">{activity.amount}</span>
                       <span className="text-gray-400">{activity.currency}</span>
                     </div>

@@ -16,7 +16,7 @@ const SuiQuestLogin: React.FC<SuiQuestLoginProps> = () => {
     if (account?.address) {
       // Store wallet address in localStorage
       localStorage.setItem('walletAddress', account.address);
-      navigate('/role-selection');
+      navigate('/skill-selection');
     }
   }, [account, navigate]);
 
@@ -26,7 +26,7 @@ const SuiQuestLogin: React.FC<SuiQuestLoginProps> = () => {
       <header className="flex items-center justify-between px-42 py-4">
         {/* Logo - Left */}
         <div className="flex items-center space-x-2">
-          <img src={Logo} alt="Logo" style={{ width: 50 }} />
+          <img src={Logo} alt="Logo" style={{ width: 50 }} /> 
           <span className='text-bold'>Sui Quest</span>
         </div>
         

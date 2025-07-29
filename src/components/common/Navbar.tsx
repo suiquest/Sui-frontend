@@ -31,7 +31,7 @@ const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <header className="flex items-center justify-between px-42 py-4 bg-transparent">
+    <header className="flex items-center justify-between px-42 py-4 bg-transparent sticky top-0 z-40">
       {/* Logo - Left */}
       <Link to="/" className="flex items-center space-x-2">
         <img src={Logo} alt="Logo" style={{ width: 50 }} />

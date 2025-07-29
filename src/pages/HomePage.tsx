@@ -1,9 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, DollarSign, CheckCircle, Clock, } from 'lucide-react';
+import { CheckCircle, Clock, Github, Paperclip } from "lucide-react";
 import Layout from '../components/common/Layout';
 import Group1Image from '../assets/Group 1.png';
 import ContainerImage from '../assets/Container.png';
+import Eliot from '../assets/Eliot00.png';
+import Charislam from '../assets/charislam.png';
+import Svg from '../assets/SVG.png';
+import Users from '../assets/users.png';
+import Dollar from '../assets/dollar.png'
 
 const HomePage: React.FC = () => {
   return (
@@ -12,8 +17,8 @@ const HomePage: React.FC = () => {
         authButtonText: "Get Started"
       }}
     >
-      <div className="min-h-[calc(100vh-80px)] bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-        <div className="container mx-auto px-40 py-16">
+      <div className="min-h-[calc(100vh-80px)] bg-[#1d293d]">
+        <div className="container mx-auto px-40 py-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left Content */}
             <div className="space-y-8">
@@ -45,138 +50,273 @@ const HomePage: React.FC = () => {
             </div>
 
             {/* Right Content - Activity Feed */}
-            <div className=" backdrop-blur-sm rounded-xl p-6  ">
-              <div className="space-y-4">
-                {/* Activity Item 1 */}
-                <div className="flex items-start gap-3 p-4  bg-slate-800/70 rounded-lg">
-                  <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-bold">
-                    U
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-white font-medium text-sm">User</span>
-                      <span className="text-gray-400 text-xs">
-                        [SUI Session] Add hack to on homepage
-                      </span>
+            <div className=" p-6">
+              <div className="max-w-md mx-auto space-y-3">
+                {/* Item 1 - SSR Guides */}
+                    <div className="flex items-center gap-3 p-4 bg-slate-800/90 rounded-lg border border-slate-700/50">
+                      
+                        <div className="flex items-center gap-1 border- border-[#0E6DF13] rounded-lg px-2 bg-[#0E6DF11A]">
+                            <img src={Svg} alt="svg"  
+                               className="w-4 h-4 rounded-full" />
+                          <span>#3</span>
+                        </div>
+                       
+                    
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="text-white font-medium text-sm">[SSR Guides] Add Nuxt.js to examples</span>
+                        </div>
+                        <div className="flex items-center gap-4 text-xs text-gray-400">
+                          <div className="flex items-center gap-1">
+                            <Github className="w-3 h-3" />
+                            <span>Github</span>
+                          </div>
+                          <span>+3</span>
+                          <div className="flex items-center gap-1">
+                           <Clock className="w-3 h-3" />
+                          <span>4 months ago</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <img src={Charislam} alt="charislam"  
+                               className="w-4 h-4 rounded-full" />
+                            <span>charislam</span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-gray-400">
-                      <span>5 months ago</span>
-                      <span className="text-green-400 flex items-center gap-1">
-                        <Heart className="w-3 h-3" />
-                        23 chained
-                      </span>
-                    </div>
-                  </div>
-                </div>
 
-                {/* Activity Item 2 */}
-                <div className="flex items-start gap-3 p-4  bg-slate-800/70 rounded-lg">
-                  <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white text-sm font-bold">
-                    A
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-white font-medium text-sm">Add</span>
-                      <span className="text-gray-400 text-xs">
-                        Add server-side marketing session ask Solution
-                      </span>
+                    {/* Item 2 - Server-side rendering */}
+                  <div className="flex items-center gap-3 p-4 bg-slate-800/90 rounded-lg border border-slate-700/50">
+                   <div className="flex items-center gap-1 border- border-[#0E6DF13] rounded-lg px-2 bg-[#0E6DF11A]">
+                            <img src={Svg} alt="svg"  
+                               className="w-4 h-4 rounded-full" />
+                          <span>#3</span>
+                        </div>
+                       
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-white font-medium text-sm">Add server-side rendering example with SolidStart</span>
+                      </div>
+                      <div className="flex items-center gap-4 text-xs text-gray-400">
+                        <div className="flex items-center gap-1">
+                          <Paperclip className="w-3 h-3" />
+                          <span>Attachment</span>
+                        </div>
+                        <span>+2</span>
+                        <div className="flex items-center gap-1">
+                           <Clock className="w-3 h-3" />
+                          <span>8 months ago</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <img src={Eliot} alt="Eliot00"  
+                               className="w-4 h-4 rounded-full" />
+                            <span>Eliot00</span>
+                          </div>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-gray-400">
-                      <span>5 months ago</span>
-                      <span className="text-blue-400 flex items-center gap-1">
-                        <DollarSign className="w-3 h-3" />
-                        $19,000
-                      </span>
-                    </div>
                   </div>
-                </div>
 
-                {/* Activity Item 3 */}
-                <div className="flex items-start gap-3 p-4  bg-slate-800/70 rounded-lg">
-                  <div className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center text-white text-sm font-bold">
-                    S
-                  </div>
-                  <div className="flex-1">
+                    {/* Item 3 - Blurred/Faded */}
+                  <div className="flex items-center gap-3 p-4 bg-slate-800/40 rounded-lg border border-slate-700/30 opacity-60 blur-[0.5px]">
+                  <div className="flex items-center gap-1 border- border-[#0E6DF13] rounded-lg px-2 bg-[#0E6DF11A]">
+                            <img src={Svg} alt="svg"  
+                               className="w-4 h-4 rounded-full" />
+                          <span>#4</span>
+                        </div>
+                  <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="text-white font-medium text-sm">Sys</span>
-                      <span className="text-gray-400 text-xs">
-                        Something in Marketing goes
-                      </span>
+                      <span className="text-white font-medium text-sm">Update documentation</span>
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-gray-400">
-                      <span>1 day ago</span>
-                      <span className="text-green-400 flex items-center gap-1">
-                        <CheckCircle className="w-3 h-3" />
-                        Completed
-                      </span>
+                    <div className="flex items-center gap-4 text-xs text-gray-400">
+                      <div className="flex items-center gap-1">
+                        <Github className="w-3 h-3" />
+                        <span>Github</span>
+                      </div>
+                      <span>+1</span>
+                      <span>1 year ago</span>
+                      <div className="flex items-center gap-1">
+                        <div className="w-4 h-4 rounded-full bg-blue-500"></div>
+                        <span>contributor</span>
+                      </div>
                     </div>
                   </div>
-                </div>
+                  </div>
 
-                {/* Activity Item 4 */}
-                <div className="flex items-start gap-3 p-4  bg-slate-800/70 rounded-lg">
-                  <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white text-sm font-bold">
-                    M
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-white font-medium text-sm">MktUser</span>
-                      <span className="text-gray-400 text-xs">
-                        Marketing Platform Builder
-                      </span>
+                    {/* Item 4 - More blurred */}
+                    <div className="flex items-center gap-3 p-4 bg-slate-800/30 rounded-lg border border-slate-700/20 opacity-40 blur-[1px]">
+                      <div className="flex items-center gap-1 border- border-[#0E6DF13] rounded-lg px-2 bg-[#0E6DF11A]">
+                            <img src={Svg} alt="svg"  
+                               className="w-4 h-4 rounded-full" />
+                          <span>#5</span>
+                        </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="text-white font-medium text-sm">Fix build issues</span>
+                        </div>
+                        <div className="flex items-center gap-4 text-xs text-gray-400">
+                          <div className="flex items-center gap-1">
+                            <CheckCircle className="w-3 h-3" />
+                            <span>Completed</span>
+                          </div>
+                          <span>2 years ago</span>
+                          <div className="flex items-center gap-1">
+                            <div className="w-4 h-4 rounded-full bg-gray-500"></div>
+                            <span>maintainer</span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-gray-400">
-                      <span>2 days ago</span>
-                      <span className="text-yellow-400 flex items-center gap-1">
-                        <Clock className="w-3 h-3" />
-                        In Progress
-                      </span>
-                    </div>
-                  </div>
-                </div>
 
-                {/* Activity Item 5 */}
-                <div className="flex items-start gap-3 p-4  bg-slate-800/70 rounded-lg">
-                  <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center text-white text-sm font-bold">
-                    D
-                  </div>
-                  <div className="flex-1">
+                    {/* Item 5 - Most blurred */}
+                <div className="flex items-center gap-3 p-4 bg-slate-800/20 rounded-lg border border-slate-700/10 opacity-25 blur-[1.5px]">
+                  <div className="flex items-center gap-1 border- border-[#0E6DF13] rounded-lg px-2 bg-[#0E6DF11A]">
+                            <img src={Svg} alt="svg"  
+                               className="w-4 h-4 rounded-full" />
+                          <span>#6</span>
+                        </div>
+                  <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="text-white font-medium text-sm">DevCon</span>
-                      <span className="text-gray-400 text-xs">
-                        Development Contract Session
-                      </span>
+                      <span className="text-white font-medium text-sm">Initial commit</span>
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-gray-400">
-                      <span>3 days ago</span>
-                      <span className="text-purple-400">🚀 New</span>
+                    <div className="flex items-center gap-4 text-xs text-gray-400">
+                      <div className="flex items-center gap-1">
+                        <Github className="w-3 h-3" />
+                        <span>Github</span>
+                      </div>
+                      <span>3 years ago</span>
+                      <div className="flex items-center gap-1">
+                        <div className="w-4 h-4 rounded-full bg-green-500"></div>
+                        <span>creator</span>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
           </div>
         </div>
+      </div>
+          
 
-        {/* Group 1 Image Section - Centered */}
-        <div className="container mx-auto px-20 py-16">
-          <div className="flex justify-center">
-            <img 
-              src={Group1Image} 
-              alt="Group 1" 
-              className="max-w-full h-auto"
-            />
+        <div className="container mx-auto px-20 py-6">
+      <div className="flex justify-center relative">
+        <img
+          src={Group1Image}
+          alt="Group 1"
+          className="max-w-full h-auto"
+        />
+        
+        {/* Text Overlay */}
+        <div className="absolute inset-0 flex items-end justify-center pb-45">
+          <div className="bg-[#FFFFFF0F] border border-[#F3F3F375] bg-opacity-60 rounded-2xl px-12 py-8 mx-4 max-w-2xl text-center">
+            <h2 className="text-white text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+              The #1 verifiable way, contributors earn on Sui.
+            </h2>
           </div>
         </div>
+      </div>
+    </div>
 
         {/* Container Image Section - Centered */}
-        <div className="container mx-auto px-20 py-16">
+        <div className="container mx-auto px-20 py-10">
           <div className="flex justify-center">
             <img 
               src={ContainerImage} 
               alt="Container" 
               className="max-w-full h-auto"
             />
+          </div>
+        </div>
+
+        {/* Sui Quest Section */}
+        <div className=" text-white py-16 px-6">
+          <div className="max-w-6xl mx-auto">
+            {/* Header Section */}
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold mb-4">
+                Why contribute through Sui Quest?
+              </h2>
+              <p className="text-gray-300 text-lg">
+                Data shared with Sui Quest stays on the blockchain.
+              </p>
+            </div>
+
+            {/* Cards Section */}
+            <div className="grid md:grid-cols-3 gap-6 mb-16">
+              {/* Funders Card */}
+              <div className="bg-[#FFFFFF0D] border border-[#FFFFFF1A]
+ rounded-2xl p-8 text-center">
+                <div className="bg-slate-700 w-16 h-16 rounded-lg flex items-center justify-center mx-auto mb-6">
+                  <img
+                      src={Dollar}
+                      alt="dollar"
+                      className="max-w-full h-auto"
+                    />
+                </div>
+                <h3 className="text-xl font-bold mb-4">Funders</h3>
+                <p className="text-gray-300 text-sm leading-relaxed">
+                  Invest in Brilliance. Power the Next Sui Revolution. 
+                  Builders Need Vision. Funders Make It Real. Join the 
+                  Quest Where Code Meets Capital: The Sui 
+                  Ecosystem Quest
+                </p>
+              </div>
+
+              {/* Developers Card */}
+              <div className="bg-[#FFFFFF0D] border border-[#FFFFFF1A]
+ rounded-2xl p-8 text-center">
+                <div className="bg-slate-700 w-16 h-16 rounded-lg flex items-center justify-center mx-auto mb-6">
+                  <img
+                   src={Users}
+                  alt="Group 1"
+                  className="max-w-full h-auto"
+                />
+                </div>
+                <h3 className="text-xl font-bold mb-4">Developers</h3>
+                <p className="text-gray-300 text-sm leading-relaxed">
+                  Code. Create. Conquer — The Sui Dev Quest 🚀
+                  <br /><br />
+                  Sui Creators Quest: Where Code Becomes Magic. ✨
+                  <br />
+                  Move with Purpose: A Quest for Sui Builders ⚡
+                </p>
+              </div>
+
+              {/* Creatives Card */}
+              <div className="bg-[#FFFFFF0D] border border-[#FFFFFF1A]
+ rounded-2xl p-8 text-center">
+                <div className="bg-slate-700 w-16 h-16 rounded-lg flex items-center justify-center mx-auto mb-6">
+                  <img
+                  src ={Users}
+                  alt="Group 1"
+                  className="max-w-full h-auto"
+                />
+                </div>
+                <h3 className="text-xl font-bold mb-4">Creatives</h3>
+                <p className="text-gray-300 text-sm leading-relaxed">
+                  "Calling All Creators: The Sui Ecosystem Needs Your 
+                  Voice 🎤 "Stories Shape Chains — What Will You 
+                  Create on Sui? ✨ "Creativity Meets Crypto — Start 
+                  Your Creator Journey on Sui 💡
+                </p>
+              </div>
+            </div>
+
+            {/* Get Started Section */}
+            <div className="bg-[#FFFFFF0D] border border-[#FFFFFF1A]
+ rounded-2xl p-12 text-center mb-8">
+              
+              <h3 className="text-2xl font-bold mb-6">🔒 Get Started</h3>
+              <p className="text-gray-300 text-lg mb-8 max-w-2xl mx-auto">
+                Our business model is sponsorship. Big brands that want your attention give us
+              </p>
+            </div>
+
+            {/* Get Started Button */}
+            <div className="text-center">
+              <button className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-lg font-medium transition-colors">
+                Get Started Now
+              </button>
+            </div>
           </div>
         </div>
       </div>
