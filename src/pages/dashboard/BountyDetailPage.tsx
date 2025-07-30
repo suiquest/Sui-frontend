@@ -140,8 +140,20 @@ const BountyDetailPage = () => {
   const [selectedPrize, setSelectedPrize] = useState('First');
   const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
 
+  // If no bounty data, redirect or show error
+  if (!bounty) {
+    return (
+      <div className="min-h-screen bg-slate-900 text-white flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4">Bounty Not Found</h1>
+          <p className="text-gray-400">The bounty you're looking for doesn't exist.</p>
+        </div>
+      </div>
+    );
+  }
+
   // Dynamic prizes based on bounty amount
-  const totalBounty = bounty?.bounty || bounty?.totalAmount || 1000;
+  const totalBounty = bounty?.bounty || bounty?.totalAmount || bounty?.bountyAmount || 1000;
   const prizes = [
     { name: 'First', amount: `$${Math.floor(totalBounty * 0.5)}`, color: 'bg-blue-500' },
     { name: 'Second', amount: `$${Math.floor(totalBounty * 0.3)}`, color: 'bg-gray-400' },
@@ -160,11 +172,11 @@ const BountyDetailPage = () => {
   const [submissions, setSubmissions] = useState(getSubmissions());
 
   // Dynamic skill tags from bounty data
-  const skillTags = bounty?.skillTags || bounty?.skills || ['TypeScript', 'Python', 'Contributing', 'Rust'];
+  const skillTags = bounty?.skillTags || bounty?.skills || ['Development', 'Design', 'Frontend'];
 
   // Calculate remaining time
   const calculateRemainingTime = () => {
-    if (!bounty?.dueDate) return '13h 45m 30s';
+    if (!bounty?.dueDate) return 'No deadline set';
     
     const now = new Date();
     const deadline = new Date(bounty.dueDate);
@@ -184,7 +196,6 @@ const BountyDetailPage = () => {
 
   return (
     <div className="min-h-screen bg-slate-900 text-white">
-      {/* Header */}
       <DashboardNavbar />
 
       <div className="max-w-7xl mx-auto px-6 py-8">
@@ -202,7 +213,7 @@ const BountyDetailPage = () => {
                     key={prize.name}
                     className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-colors ${
                       selectedPrize === prize.name 
-                        ? ' border-slate-600' 
+                        ? 'border border-slate-600' 
                         : 'hover:bg-slate-700'
                     }`}
                     onClick={() => setSelectedPrize(prize.name)}
@@ -240,9 +251,9 @@ const BountyDetailPage = () => {
                 Skill Set
               </h3>
               <div className="flex flex-wrap gap-2">
-                {skillTags.map((skill) => (
+                {skillTags.map((skill, index) => (
                   <span
-                    key={skill}
+                    key={index}
                     className="bg-slate-700 text-gray-300 px-3 py-1 rounded-full text-sm"
                   >
                     {skill}
@@ -262,9 +273,9 @@ const BountyDetailPage = () => {
                   year: 'numeric', 
                   month: 'long', 
                   day: 'numeric' 
-                }) : 'August 01, 2023'} - as scheduled by the
+                }) : 'No deadline set'} - as scheduled by
               </p>
-              <p className="text-white font-medium">{bounty?.company || 'Creator'}</p>
+              <p className="text-white font-medium">{bounty?.company || bounty?.organizationName || 'Creator'}</p>
             </div>
 
             {/* Submission Count */}
@@ -297,24 +308,40 @@ const BountyDetailPage = () => {
           {/* Main Content - Right */}
           <div className="lg:col-span-3">
             <div className="flex items-start gap-6 mb-8">
-              <div className="w-20 h-20 bg-green-500 rounded-xl flex items-center justify-center flex-shrink-0">
-                <div className="w-10 h-10 bg-green-400 rounded transform rotate-45"></div>
+              {/* Dynamic Organization Logo */}
+              <div className="w-20 h-20 bg-slate-700 rounded-xl flex items-center justify-center flex-shrink-0">
+                {bounty?.organizationLogo ? (
+                  <img 
+                    src={bounty.organizationLogo} 
+                    alt={bounty.organizationName || bounty.company || 'Organization'} 
+                    className="w-full h-full object-cover rounded-xl"
+                  />
+                ) : (
+                  <div className="text-white font-semibold text-lg">
+                    {bounty?.organizationName ? 
+                      bounty.organizationName.charAt(0).toUpperCase() : 
+                      bounty?.company ? 
+                      bounty.company.charAt(0).toUpperCase() :
+                      bounty?.title.charAt(0).toUpperCase()
+                    }
+                  </div>
+                )}
               </div>
               
               <div className="flex-1">
                 <h1 className="text-3xl font-bold text-white mb-3">
-                  {bounty?.title || 'Bounty Title'}
+                  {bounty.title}
                 </h1>
                 <div className="flex items-center gap-2 text-gray-400 text-sm mb-4">
                   <Clock className="w-4 h-4" />
-                  <span>{bounty?.postedTime || 'Posted time'}</span>
+                  <span>{bounty.postedTime || 'Recently posted'}</span>
                   <span>•</span>
-                  <span>{bounty?.category || 'Category'}</span>
+                  <span>{bounty.category}</span>
                   <span>•</span>
-                  <span>${bounty?.bounty || bounty?.totalAmount || '0'}</span>
+                  <span>${totalBounty}</span>
                 </div>
                 <p className="text-gray-300 leading-relaxed">
-                  {bounty?.description || 'Bounty description'}
+                  {bounty.description}
                 </p>
               </div>
             </div>
@@ -322,9 +349,9 @@ const BountyDetailPage = () => {
             {/* Description Box */}
             <div className="bg-slate-800 rounded-lg p-6 mb-8">
               <p className="text-blue-400 mb-4">
-                <strong>{bounty?.company || 'Company'}</strong> {bounty?.companyDescription || 'is building innovative solutions.'}
+                <strong>{bounty.company || bounty.organizationName || 'Organization'}</strong> {bounty.companyDescription || 'is looking for talented contributors to help with this bounty.'}
               </p>
-              {bounty?.links && (
+              {bounty.links && (
                 <p className="text-blue-400 mb-2 flex items-center gap-2">
                   <Link className="w-4 h-4" />
                   Documentation <a href={bounty.links} className="underline hover:text-blue-300">Docs</a>
@@ -381,7 +408,6 @@ const BountyDetailPage = () => {
         </div>
       </div>
 
-      {/* Submit Bounty Modal */}
       <SubmitBountyModal
         isOpen={isSubmitModalOpen}
         onClose={() => setIsSubmitModalOpen(false)}

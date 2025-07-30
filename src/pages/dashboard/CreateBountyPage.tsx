@@ -391,7 +391,9 @@ const CreateBountyPage: React.FC = () => {
           protocolFee: protocolFee,
           totalAmount: totalAmount,
           category: formData.category,
-          dueDate: formData.dueDate
+          dueDate: formData.dueDate,
+          organizationName: formData.organizationName,
+          organizationLogo: formData.organizationLogo
         }}
         onDeposit={handleDepositComplete}
       />

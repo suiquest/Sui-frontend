@@ -1,5 +1,7 @@
-import React, { useState, useRef } from 'react';
-import { ArrowLeft, Search, Plus, List, HelpCircle, Eye } from 'lucide-react';
+import React, { useState } from 'react';
+import { Search, Plus, List, HelpCircle, Upload } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import DashboardNavbar from '../../components/common/DashboardNavbar';
 
 interface Contributor {
   id: string;
@@ -10,70 +12,57 @@ interface Contributor {
   payAmount?: string;
 }
 
-const BulQuestNavbar = () => (
-  <nav className="bg-slate-800 border-b border-slate-700 px-6 py-4">
-    <div className="flex items-center justify-between">
-      <div className="flex items-center gap-8">
-        <div className="flex items-center gap-2">
-          <div className="w-6 h-6 bg-blue-500 rounded flex items-center justify-center">
-            <div className="w-3 h-3 bg-white rounded-sm"></div>
-          </div>
-          <span className="text-white font-medium">Bul Quest</span>
-        </div>
-        <div className="flex items-center gap-6 text-gray-300">
-          <a href="#" className="hover:text-white transition-colors">Discover</a>
-          <a href="#" className="hover:text-white transition-colors">Search</a>
-          <a href="#" className="hover:text-white transition-colors">Leaderboard</a>
-        </div>
-      </div>
-      <div className="flex items-center gap-4">
-        <span className="text-gray-300">Bilal S.</span>
-        <div className="w-8 h-8 bg-orange-500 rounded-full"></div>
-        <button className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm">
-          +4.9 Bounty Days
-        </button>
-        <span className="text-gray-300">Open Profile</span>
-      </div>
-    </div>
-  </nav>
-);
-
 const ListingDetailPage: React.FC = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const listing = location.state?.listing;
+
+  // Get user profile from localStorage
+  const getUserProfile = () => {
+    const savedProfile = localStorage.getItem('userProfile');
+    if (savedProfile) {
+      return JSON.parse(savedProfile);
+    }
+    return { name: 'User', role: 'User' };
+  };
+
+  const userProfile = getUserProfile();
+
   const [selectedImage, setSelectedImage] = useState<string>('/api/placeholder/120/120');
   const [contributors] = useState<Contributor[]>([
     {
       id: '1',
       name: 'Andrew L',
-      avatar: '🟠',
-      specialty: 'Videojd... - Sprout',
+      avatar: 'AL',
+      specialty: 'Video... - Sprout',
       status: 'Review'
     },
     {
       id: '2',
       name: 'Justin Associate',
-      avatar: '👤',
-      specialty: 'Videofrd... - Sprout',
+      avatar: 'JA',
+      specialty: 'Video... - Sprout',
       status: 'Review'
     },
     {
       id: '3',
       name: 'Chinnwachuwm Peter Fwuzus',
-      avatar: '👤',
-      specialty: 'Videofrd... - Sprout',
+      avatar: 'CP',
+      specialty: 'Video... - Sprout',
       status: 'Review'
     },
     {
       id: '4',
       name: 'Prospero Milan',
-      avatar: '🟣',
-      specialty: 'Videofrd... - Sprout',
+      avatar: 'PM',
+      specialty: 'Video... - Sprout',
       status: 'Review'
     },
     {
       id: '5',
       name: 'Zkreaum ID',
-      avatar: '👤',
-      specialty: 'Videofrd... - Sprout',
+      avatar: 'ZI',
+      specialty: 'Video... - Sprout',
       status: 'Review'
     }
   ]);
@@ -99,7 +88,7 @@ const ListingDetailPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-900 text-white">
-      <BulQuestNavbar />
+      <DashboardNavbar userProfile={userProfile} />
       
       <div className="flex">
         {/* Left Sidebar */}
@@ -154,10 +143,10 @@ const ListingDetailPage: React.FC = () => {
                     Design 4 Magic Eden Discovery Pages
                   </h1>
                   <div className="flex items-center gap-4 text-sm text-gray-400 mb-4">
-                    <span>🏆 Bounty</span>
-                    <span>🌟 Top winner</span>
-                    <span>👁️ 3</span>
-                    <span>❤️ 3</span>
+                    <span>Bounty</span>
+                    <span>Top winner</span>
+                    <span>Views: 3</span>
+                    <span>Likes: 3</span>
                   </div>
                 </div>
               </div>
@@ -202,10 +191,8 @@ const ListingDetailPage: React.FC = () => {
                           : 'hover:bg-slate-700'
                       }`}
                     >
-                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center text-white font-bold">
-                        {contributor.avatar === '🟠' && '👤'}
-                        {contributor.avatar === '🟣' && '👤'}
-                        {contributor.avatar === '👤' && '👤'}
+                      <div className="bg-gray-700 rounded-full w-8 h-8 flex items-center justify-center text-sm font-medium">
+                        {contributor.avatar}
                       </div>
                       <div className="flex-1">
                         <div className="text-white font-medium">{contributor.name}</div>
@@ -272,3 +259,4 @@ const ListingDetailPage: React.FC = () => {
 };
 
 export default ListingDetailPage;
+
