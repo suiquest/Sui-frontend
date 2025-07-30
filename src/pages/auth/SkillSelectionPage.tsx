@@ -1,5 +1,5 @@
 // src/pages/auth/SkillSelectionPage.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ProgressionStatus from '../../components/common/ProgressionStatus';
 import BottomActions from '../../components/common/BottomActions';
@@ -11,9 +11,26 @@ interface Skill {
 }
 
 const SkillSelectionPage: React.FC = () => {
+  const navigate = useNavigate();
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const navigate = useNavigate();
+
+  // Check if user already has a complete profile
+  useEffect(() => {
+    const savedProfile = localStorage.getItem('userProfile');
+    if (savedProfile) {
+      const profile = JSON.parse(savedProfile);
+      // If user already has a complete profile, redirect to dashboard
+      if (profile.name && profile.role && profile.walletAddress) {
+        navigate('/dashboard', { state: { userProfile: profile } });
+        return;
+      }
+      // If user has skills already, load them
+      if (profile.skills && profile.skills.length > 0) {
+        setSelectedSkills(profile.skills);
+      }
+    }
+  }, [navigate]);
   
   const skills: Skill[] = [
     { id: 'javascript', label: 'JavaScript', icon: 'J' },
@@ -54,6 +71,8 @@ const SkillSelectionPage: React.FC = () => {
   };
 
   const handleNext = () => {
+    // Save selected skills to localStorage for use in profile setup
+    localStorage.setItem('selectedSkills', JSON.stringify(selectedSkills));
     navigate('/profile-setup');
   };
 

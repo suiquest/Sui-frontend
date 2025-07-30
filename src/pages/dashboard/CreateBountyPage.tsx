@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { ArrowLeft, DollarSign, Upload, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import DashboardNavbar from '../../components/common/DashboardNavbar';
+import DepositBountyModal from '../../components/modals/DepositBountyModal';
 
 const CreateBountyPage: React.FC = () => {
   const navigate = useNavigate();
+  const [showDepositModal, setShowDepositModal] = useState(false);
+  const [pendingBountyData, setPendingBountyData] = useState<any>(null);
   
   const [formData, setFormData] = useState({
     title: '',
@@ -32,8 +35,8 @@ const CreateBountyPage: React.FC = () => {
 
   // Calculate protocol price (5% of bounty amount)
   const bountyAmount = parseFloat(formData.bountyAmount) || 0;
-  const protocolPrice = bountyAmount > 0 ? bountyAmount * 0.05 : 0;
-  const totalPricePool = bountyAmount + protocolPrice;
+  const protocolFee = bountyAmount > 0 ? bountyAmount * 0.05 : 0;
+  const totalAmount = bountyAmount + protocolFee;
 
   const categories = ['Development', 'Design', 'Content', 'Marketing', 'Other'];
   const availableSkills = ['Python', 'TypeScript', 'React', 'Rust', 'Solidity', 'UI/UX', 'Writing', 'Copywriting', 'Rive'];
@@ -50,46 +53,60 @@ const CreateBountyPage: React.FC = () => {
     const bountyData = {
       ...formData,
       bountyAmount: bountyAmount,
-      protocolPrice: protocolPrice,
-      totalPricePool: totalPricePool,
+      protocolFee: protocolFee,
+      totalAmount: totalAmount,
       id: Date.now().toString(),
       company: formData.organizationName || 'Your Company',
       postedTime: 'Posted just now',
       avatar: '💰',
-      status: 'active' as const,
-      bounty: totalPricePool
+      status: 'pending' as const,
+      bounty: totalAmount
     };
 
-    // Save to localStorage for job listings
-    const existingJobs = localStorage.getItem('jobListings');
-    const jobListings = existingJobs ? JSON.parse(existingJobs) : [];
-    const updatedJobs = [bountyData, ...jobListings];
-    localStorage.setItem('jobListings', JSON.stringify(updatedJobs));
+    // Store bounty data and show deposit modal
+    setPendingBountyData(bountyData);
+    setShowDepositModal(true);
+  };
 
-    // Save to user's listings
-    const existingMyListings = localStorage.getItem('myListings');
-    const myListings = existingMyListings ? JSON.parse(existingMyListings) : [];
-    const updatedMyListings = [bountyData, ...myListings];
-    localStorage.setItem('myListings', JSON.stringify(updatedMyListings));
-    
-    // Show success message
-    setShowSuccessMessage(true);
-    setTimeout(() => {
-      setShowSuccessMessage(false);
-      navigate('/dashboard/manage-listing');
-    }, 3000);
+  const handleDepositComplete = () => {
+    if (pendingBountyData) {
+      // Update status to active after deposit
+      const activeBountyData = {
+        ...pendingBountyData,
+        status: 'active' as const
+      };
 
-    // Reset form
-    setFormData({
-      title: '',
-      description: '',
-      category: 'Development',
-      bountyAmount: '',
-      dueDate: '',
-      skillTags: [],
-      organizationName: '',
-      organizationLogo: null
-    });
+      // Save to localStorage for job listings
+      const existingJobs = localStorage.getItem('jobListings');
+      const jobListings = existingJobs ? JSON.parse(existingJobs) : [];
+      const updatedJobs = [activeBountyData, ...jobListings];
+      localStorage.setItem('jobListings', JSON.stringify(updatedJobs));
+
+      // Save to user's listings
+      const existingMyListings = localStorage.getItem('myListings');
+      const myListings = existingMyListings ? JSON.parse(existingMyListings) : [];
+      const updatedMyListings = [activeBountyData, ...myListings];
+      localStorage.setItem('myListings', JSON.stringify(updatedMyListings));
+      
+      // Show success and navigate
+      setShowSuccessMessage(true);
+      setTimeout(() => {
+        setShowSuccessMessage(false);
+        navigate('/dashboard/manage-listing');
+      }, 2000);
+
+      // Reset form
+      setFormData({
+        title: '',
+        description: '',
+        category: 'Development',
+        bountyAmount: '',
+        dueDate: '',
+        skillTags: [],
+        organizationName: '',
+        organizationLogo: null
+      });
+    }
   };
 
   const toggleSkill = (skill: string) => {
@@ -135,7 +152,7 @@ const CreateBountyPage: React.FC = () => {
               <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
                 ✓
               </div>
-              <span>Bounty created successfully! Total pool: ${totalPricePool.toFixed(2)}</span>
+              <span>Bounty created and funded successfully! Total pool: ${totalAmount.toFixed(2)}</span>
             </div>
           </div>
         )}
@@ -362,6 +379,22 @@ const CreateBountyPage: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Deposit Modal */}
+      <DepositBountyModal
+        isOpen={showDepositModal}
+        onClose={() => setShowDepositModal(false)}
+        bountyData={{
+          title: formData.title,
+          description: formData.description,
+          bountyAmount: bountyAmount,
+          protocolFee: protocolFee,
+          totalAmount: totalAmount,
+          category: formData.category,
+          dueDate: formData.dueDate
+        }}
+        onDeposit={handleDepositComplete}
+      />
     </div>
   );
 };

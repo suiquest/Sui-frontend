@@ -1,5 +1,5 @@
 // src/pages/auth/RoleSelectionPage.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ProgressionStatus from '../../components/common/ProgressionStatus';
 import BottomActions from '../../components/common/BottomActions';
@@ -9,6 +9,19 @@ type AccountType = 'Contributor' | 'Funder' | null;
 const RoleSelectionPage: React.FC = () => {
   const [selectedAccount, setSelectedAccount] = useState<AccountType>(null);
   const navigate = useNavigate();
+
+  // Check if user already has a complete profile
+  useEffect(() => {
+    const savedProfile = localStorage.getItem('userProfile');
+    if (savedProfile) {
+      const profile = JSON.parse(savedProfile);
+      // If user already has a complete profile, redirect to dashboard
+      if (profile.name && profile.role && profile.walletAddress) {
+        navigate('/dashboard', { state: { userProfile: profile } });
+        return;
+      }
+    }
+  }, [navigate]);
 
   const handleBack = () => {
     // Navigate to previous page or handle back action

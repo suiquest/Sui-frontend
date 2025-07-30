@@ -140,80 +140,47 @@ const BountyDetailPage = () => {
   const [selectedPrize, setSelectedPrize] = useState('First');
   const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
 
+  // Dynamic prizes based on bounty amount
+  const totalBounty = bounty?.bounty || bounty?.totalAmount || 1000;
   const prizes = [
-    { name: 'First', amount: '$1,000', color: 'bg-blue-500' },
-    { name: 'Second', amount: '$500', color: 'bg-gray-400' },
-    { name: 'Third', amount: '$250', color: 'bg-orange-400' }
+    { name: 'First', amount: `$${Math.floor(totalBounty * 0.5)}`, color: 'bg-blue-500' },
+    { name: 'Second', amount: `$${Math.floor(totalBounty * 0.3)}`, color: 'bg-gray-400' },
+    { name: 'Third', amount: `$${Math.floor(totalBounty * 0.2)}`, color: 'bg-orange-400' }
   ];
 
-  const submissions = [
-    {
-      id: 1,
-      title: "generative schematic documentation (bullet 3)",
-      platform: "URL",
-      submitter: "logicatasm",
-      timeAgo: "3 months ago",
-      votes: "+5"
-    },
-    {
-      id: 2,
-      title: "[SUR Guides] Add Next.js to examples",
-      platform: "GitHub",
-      submitter: "channaim",
-      timeAgo: "4 months ago",
-      votes: "+3"
-    },
-    {
-      id: 3,
-      title: "Add server-side rendering example with SolidStart",
-      platform: "Alphonse",
-      submitter: "Elijah",
-      timeAgo: "5 months ago",
-      votes: "+2"
-    },
-    {
-      id: 4,
-      title: "Subtle bug in Remix guide",
-      platform: "GitHub",
-      submitter: "AlenTurzak",
-      timeAgo: "6 months ago",
-      votes: "+2"
-    },
-    {
-      id: 5,
-      title: "Bug: String Separator in Table Editor Panels is Buggy",
-      platform: "GitHub",
-      submitter: "marcauth",
-      timeAgo: "about 1 year ago",
-      votes: "+3"
-    },
-    {
-      id: 6,
-      title: "Allow copying the batch definition from the dropdown menu",
-      platform: "URL",
-      submitter: "salkouf",
-      timeAgo: "about 1 year ago",
-      votes: "+5"
-    },
-    {
-      id: 7,
-      title: "This button doesn't always send the Magic Link Template",
-      platform: "URL",
-      submitter: "salkouf",
-      timeAgo: "about 1 year ago",
-      votes: "+1"
-    },
-    {
-      id: 8,
-      title: "SvelteKit 'User Management App' Docs - salkouf/session typescript error",
-      platform: "Alphonse",
-      submitter: "JustinBruno",
-      timeAgo: "about 1 year ago",
-      votes: "+2"
+  // Dynamic submissions from localStorage or default
+  const getSubmissions = () => {
+    const savedSubmissions = localStorage.getItem(`bounty_${bounty?.id}_submissions`);
+    if (savedSubmissions) {
+      return JSON.parse(savedSubmissions);
     }
-  ];
+    return []; // Empty array if no submissions
+  };
 
-  const skillTags = ['TypeScript', 'Python', 'Contributing', 'Rust'];
+  const [submissions, setSubmissions] = useState(getSubmissions());
+
+  // Dynamic skill tags from bounty data
+  const skillTags = bounty?.skillTags || bounty?.skills || ['TypeScript', 'Python', 'Contributing', 'Rust'];
+
+  // Calculate remaining time
+  const calculateRemainingTime = () => {
+    if (!bounty?.dueDate) return '13h 45m 30s';
+    
+    const now = new Date();
+    const deadline = new Date(bounty.dueDate);
+    const diff = deadline.getTime() - now.getTime();
+    
+    if (diff <= 0) return 'Expired';
+    
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    
+    if (days > 0) return `${days}d ${hours}h ${minutes}m`;
+    return `${hours}h ${minutes}m`;
+  };
+
+  const remainingTime = calculateRemainingTime();
 
   return (
     <div className="min-h-screen bg-slate-900 text-white">
@@ -263,7 +230,7 @@ const BountyDetailPage = () => {
                 <Clock className="w-4 h-4" />
                 <span className="text-white font-medium">Remaining</span>
               </div>
-              <div className="text-2xl font-bold text-white">13h 45m 30s</div>
+              <div className="text-2xl font-bold text-white">{remainingTime}</div>
             </div>
 
             {/* Skills Section */}
@@ -291,26 +258,39 @@ const BountyDetailPage = () => {
                 <span className="text-white font-medium">Deadline</span>
               </div>
               <p className="text-gray-400 text-sm mb-1">
-                August 01, 2023 - as scheduled by the
+                {bounty?.dueDate ? new Date(bounty.dueDate).toLocaleDateString('en-US', { 
+                  year: 'numeric', 
+                  month: 'long', 
+                  day: 'numeric' 
+                }) : 'August 01, 2023'} - as scheduled by the
               </p>
-              <p className="text-white font-medium">Creator</p>
+              <p className="text-white font-medium">{bounty?.company || 'Creator'}</p>
             </div>
 
             {/* Submission Count */}
             <div>
               <div className="flex items-center gap-2 mb-3">
                 <Users className="w-4 h-4" />
-                <span className="text-gray-400 text-sm">8 Submissions</span>
+                <span className="text-gray-400 text-sm">{submissions.length} Submissions</span>
               </div>
-              <div className="flex items-center gap-1 mb-2">
-                {[...Array(5)].map((_, i) => (
-                  <div key={i} className="w-8 h-8 bg-gray-600 rounded-full"></div>
-                ))}
-              </div>
-              <p className="text-gray-400 text-xs">
-                justinbruno, trentcrypt, Mini Ronaldo &<br />
-                5 others
-              </p>
+              {submissions.length > 0 && (
+                <>
+                  <div className="flex items-center gap-1 mb-2">
+                    {submissions.slice(0, 5).map((_, i) => (
+                      <div key={i} className="w-8 h-8 bg-gray-600 rounded-full"></div>
+                    ))}
+                    {submissions.length > 5 && (
+                      <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center text-xs">
+                        +{submissions.length - 5}
+                      </div>
+                    )}
+                  </div>
+                  <p className="text-gray-400 text-xs">
+                    {submissions.slice(0, 3).map(s => s.submitter).join(', ')}
+                    {submissions.length > 3 && ` & ${submissions.length - 3} others`}
+                  </p>
+                </>
+              )}
             </div>
           </div>
 
@@ -331,7 +311,7 @@ const BountyDetailPage = () => {
                   <span>•</span>
                   <span>{bounty?.category || 'Category'}</span>
                   <span>•</span>
-                  <span>${bounty?.bounty || '0'}</span>
+                  <span>${bounty?.bounty || bounty?.totalAmount || '0'}</span>
                 </div>
                 <p className="text-gray-300 leading-relaxed">
                   {bounty?.description || 'Bounty description'}
@@ -342,12 +322,14 @@ const BountyDetailPage = () => {
             {/* Description Box */}
             <div className="bg-slate-800 rounded-lg p-6 mb-8">
               <p className="text-blue-400 mb-4">
-                <strong>Supabase</strong> is the Postgres development platform. We're building the features of Firebase using enterprise-grade open source tools.
+                <strong>{bounty?.company || 'Company'}</strong> {bounty?.companyDescription || 'is building innovative solutions.'}
               </p>
-              <p className="text-blue-400 mb-2 flex items-center gap-2">
-                <Link className="w-4 h-4" />
-                Hosted Postgres Database <a href="#" className="underline hover:text-blue-300">Docs</a>
-              </p>
+              {bounty?.links && (
+                <p className="text-blue-400 mb-2 flex items-center gap-2">
+                  <Link className="w-4 h-4" />
+                  Documentation <a href={bounty.links} className="underline hover:text-blue-300">Docs</a>
+                </p>
+              )}
               <div className="mt-4">
                 <button className="text-gray-400 text-sm hover:text-gray-300 flex items-center gap-1">
                   Show more ↓
@@ -360,34 +342,40 @@ const BountyDetailPage = () => {
               <div className="flex items-center gap-2 mb-6">
                 <h2 className="text-xl font-semibold text-white">Submissions</h2>
               </div>
-              <p className="text-gray-400 text-sm mb-6">Total bounty</p>
+              <p className="text-gray-400 text-sm mb-6">Total bounty: ${totalBounty}</p>
 
-              <div className="space-y-4">
-                {submissions.map((submission) => (
-                  <div key={submission.id} className="bg-slate-800 rounded-lg p-4">
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                          <span className="text-blue-400 text-sm">{submission.platform}</span>
+              {submissions.length > 0 ? (
+                <div className="space-y-4">
+                  {submissions.map((submission) => (
+                    <div key={submission.id} className="bg-slate-800 rounded-lg p-4">
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-2">
+                            <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                            <span className="text-blue-400 text-sm">{submission.platform}</span>
+                          </div>
+                          <h3 className="text-white font-medium mb-2">
+                            {submission.title}
+                          </h3>
+                          <div className="flex items-center gap-4 text-sm text-gray-400">
+                            <span>{submission.platform}</span>
+                            <span className="text-green-400">{submission.votes}</span>
+                          </div>
                         </div>
-                        <h3 className="text-white font-medium mb-2">
-                          {submission.title}
-                        </h3>
-                        <div className="flex items-center gap-4 text-sm text-gray-400">
-                          <span>{submission.platform}</span>
-                          <span className="text-green-400">{submission.votes}</span>
+                        <div className="flex items-center gap-3 text-sm text-gray-400">
+                          <span>{submission.timeAgo}</span>
+                          <div className="w-6 h-6 bg-gray-600 rounded-full"></div>
+                          <span>{submission.submitter}</span>
                         </div>
-                      </div>
-                      <div className="flex items-center gap-3 text-sm text-gray-400">
-                        <span>{submission.timeAgo}</span>
-                        <div className="w-6 h-6 bg-gray-600 rounded-full"></div>
-                        <span>{submission.submitter}</span>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-8">
+                  <p className="text-gray-400">No submissions yet. Be the first to submit!</p>
+                </div>
+              )}
             </div>
           </div>
         </div>

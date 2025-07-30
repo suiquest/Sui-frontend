@@ -48,10 +48,25 @@ interface ProfileData {
 const DashboardPage: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const userProfile = location.state?.userProfile || { 
-    name: 'User', 
-    role: 'User' 
+  
+  // Get user profile from localStorage or location state
+  const getUserProfile = () => {
+    const savedProfile = localStorage.getItem('userProfile');
+    if (savedProfile) {
+      return JSON.parse(savedProfile);
+    }
+    return location.state?.userProfile || { name: 'User', role: 'User' };
   };
+
+  const userProfile = getUserProfile();
+
+  // Check if user has completed profile setup
+  useEffect(() => {
+    if (!userProfile.walletAddress || !userProfile.name) {
+      // Redirect to wallet connection if profile is incomplete
+      navigate('/');
+    }
+  }, [userProfile, navigate]);
 
   // Create profile data from userProfile
   const [profile] = useState<ProfileData>({

@@ -14,11 +14,37 @@ const WalletModal: React.FC<WalletModalProps> = ({
   isOpen, 
   onClose, 
   totalEarned, 
-  userName = "User",
+  userName,
   walletBalance = "0",
   onWithdraw
 }) => {
   if (!isOpen) return null;
+
+  // Get user profile and wallet address from localStorage
+  const getUserData = () => {
+    const savedProfile = localStorage.getItem('userProfile');
+    const walletAddress = localStorage.getItem('walletAddress');
+    
+    if (savedProfile) {
+      const profile = JSON.parse(savedProfile);
+      return {
+        name: profile.name || userName || "User",
+        walletAddress: profile.walletAddress || walletAddress
+      };
+    }
+    return {
+      name: userName || "User",
+      walletAddress
+    };
+  };
+
+  const userData = getUserData();
+
+  const formatWalletAddress = (address: string): string => {
+    if (!address) return '';
+    if (address.length <= 10) return address;
+    return `${address.slice(0, 6)}...${address.slice(-4)}`;
+  };
 
   const handleWithdraw = () => {
     if (onWithdraw) {
@@ -28,45 +54,62 @@ const WalletModal: React.FC<WalletModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg max-w-md w-full mx-4">
+    <div className="fixed inset-0 z-50 flex justify-end">
+      <div className="bg-white rounded-lg w-80 h-fit mt-16 mr-6 shadow-xl">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b">
-          <h2 className="text-lg font-semibold text-gray-900">Wallet - {userName}</h2>
-          <button
-            onClick={onClose}
-            className="text-gray-400 hover:text-gray-600"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
+        <div className="p-6 pb-4">
+          <div className="flex items-center justify-between mb-2">
+            <h2 className="text-xl font-semibold text-gray-900">{userData.name}'s Wallet</h2>
+            <div className="flex items-center space-x-2">
+              <span className="text-sm text-gray-400">Ninja</span>
+              <span className="text-sm text-gray-400">Help</span>
+              <button
+                onClick={onClose}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+          <p className="text-sm text-gray-600 mb-6">We can't wait to see what you've created!</p>
+          <p className="text-xs text-gray-500">Note: You can edit this submission until the bounty deadline.</p>
         </div>
 
         {/* Content */}
-        <div className="p-6 space-y-6">
-          {/* Total Amount */}
+        <div className="px-6 pb-6 space-y-6">
+          {/* Total Bounty Winnings */}
           <div>
-            <div className="text-3xl font-bold text-gray-900 mb-1">
-              ${totalEarned}
+            <div className="text-4xl font-bold text-gray-900 mb-1">
+              ${totalEarned} USD
             </div>
-            <div className="text-sm text-gray-500">Total Bounty Winnings</div>
+            <div className="text-sm font-medium text-gray-700">Total Bounty Winnings</div>
           </div>
 
-          {/* Wallet Balance */}
+          {/* Amount Input */}
           <div>
-            <div className="text-2xl font-bold text-gray-900 mb-1">
-              ${walletBalance}
+            <div className="text-sm font-medium text-gray-700 mb-2">Amount</div>
+            <div className="bg-gray-50 border border-gray-200 rounded-lg p-3">
+              <span className="text-gray-400">$ {walletBalance}</span>
             </div>
-            <div className="text-sm text-gray-500">Available Balance</div>
+          </div>
+
+          {/* Send to */}
+          <div>
+            <div className="text-sm font-medium text-gray-700 mb-2">Send to</div>
+            <div className="bg-gray-50 border border-gray-200 rounded-lg p-3">
+              <span className="text-gray-400 font-mono text-sm">
+                {userData.walletAddress ? userData.walletAddress : 'vdvijdvsoisdjojOJlOjojOjOlJOjoiJOjOjOjOjo'}
+              </span>
+            </div>
           </div>
 
           {/* Withdraw Button */}
           <button
             onClick={handleWithdraw}
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-4 rounded-lg transition-colors"
+            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2"
           >
-            Withdraw Funds
+            <span>Withdraw</span>
+            <ArrowRight className="w-4 h-4" />
           </button>
         </div>
       </div>

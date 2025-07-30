@@ -20,6 +20,14 @@ const SuiQuestLogin: React.FC<SuiQuestLoginProps> = () => {
     }
   }, [account, navigate]);
 
+  // Clear any existing wallet connections on component mount
+  useEffect(() => {
+    // Clear wallet session data to force fresh connection
+    localStorage.removeItem('sui-dapp-kit:wallet-connection-info');
+    localStorage.removeItem('sui-dapp-kit:last-connected-wallet-name');
+    localStorage.removeItem('sui-dapp-kit:auto-connect-enabled');
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-900 text-white">
       {/* Header */}

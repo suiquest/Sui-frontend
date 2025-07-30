@@ -12,6 +12,7 @@ import BountyDetailPage from './pages/dashboard/BountyDetailPage';
 import ManageListingPage from './pages/dashboard/ManageListingPage';
 import ListingDetailPage from './pages/dashboard/ListingDetailPage';
 import CreateBountyPage from './pages/dashboard/CreateBountyPage';
+import ProfilePage from './pages/ProfilePage';
 
 const App: React.FC = () => {
   return (
@@ -24,7 +25,6 @@ const App: React.FC = () => {
           <Route path="/role-selection" element={<RoleSelectionPage />} />
           <Route path="/skill-selection" element={<SkillSelectionPage />} />
           <Route path="/profile-setup" element={<ProfileSetupPage />} />
-          // In App.tsx or your routing setup
           <Route path="/profile-completion" element={<ProfileCompletionPage />} />
           
           {/* Protected Routes */}
@@ -33,6 +33,7 @@ const App: React.FC = () => {
           <Route path="/dashboard/manage-listing" element={<ManageListingPage />} />
           <Route path="/dashboard/listing-detail" element={<ListingDetailPage />} />
           <Route path="/dashboard/create-bounty" element={<CreateBountyPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
           
           {/* Redirect unknown routes to home */}
           <Route path="*" element={<Navigate to="/" replace />} />

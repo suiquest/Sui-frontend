@@ -1,5 +1,5 @@
 // src/pages/auth/ProfileSetupPage.tsx
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import ProgressionStatus from '../../components/common/ProgressionStatus';
 import BottomActions from '../../components/common/BottomActions';
@@ -13,7 +13,22 @@ interface ProfileFormData {
 
 const ProfileSetupPage: React.FC = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const selectedRole = location.state?.selectedRole;
+  
+  // Check if user already has a complete profile
+  useEffect(() => {
+    const savedProfile = localStorage.getItem('userProfile');
+    if (savedProfile) {
+      const profile = JSON.parse(savedProfile);
+      // If user already has a complete profile, redirect to dashboard
+      if (profile.name && profile.role && profile.walletAddress) {
+        navigate('/dashboard', { state: { userProfile: profile } });
+        return;
+      }
+    }
+  }, [navigate]);
+
   const [formData, setFormData] = useState<ProfileFormData>({
     firstName: '',
     lastName: '',
@@ -22,7 +37,6 @@ const ProfileSetupPage: React.FC = () => {
   });
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const navigate = useNavigate();
 
   const handleInputChange = (field: keyof ProfileFormData, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -58,13 +72,19 @@ const ProfileSetupPage: React.FC = () => {
   };
 
   const handleNext = () => {
+    // Get selected skills from localStorage
+    const selectedSkills = localStorage.getItem('selectedSkills');
+    const skills = selectedSkills ? JSON.parse(selectedSkills) : [];
     
     // Create user profile with role from role selection and name from form
     const userProfile = {
       name: `${formData.firstName} ${formData.lastName}`.trim() || 'User',
       role: selectedRole === 'bounty-hunter' ? 'Bounty Hunter' : 
             selectedRole === 'funder' ? 'Funder' : 
-            formData.role !== 'Unknown' ? formData.role : 'User'
+            formData.role !== 'Unknown' ? formData.role : 'User',
+      profileImage: profileImage,
+      bio: formData.bio || 'No bio added yet',
+      skills: skills // Include skills from skill selection
     };
     
     // Pass to completion page
