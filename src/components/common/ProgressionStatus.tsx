@@ -2,23 +2,19 @@
 import React, { useEffect, useState } from 'react';
 import { Check } from 'lucide-react';
 
-interface ProgressionStatusProps {
-  currentStep: number;
-  showCompletionAnimation?: boolean;
-}
-
-const ProgressionStatus: React.FC<ProgressionStatusProps> = ({ 
-  currentStep, 
-  showCompletionAnimation = false 
-}) => {
+// Progress Status Component
+const ProgressionStatus: React.FC<{ 
+  currentStep: number; 
+  showCompletionAnimation?: boolean 
+  }> = ({ currentStep, showCompletionAnimation = false }) => {
   const [animatedSteps, setAnimatedSteps] = useState<number[]>([]);
-
+  
   const steps = [
     { id: 1, label: 'Account', completed: currentStep > 1, active: currentStep === 1 },
     { id: 2, label: 'Skill Set', completed: currentStep > 2, active: currentStep === 2 },
     { id: 3, label: 'Profile', completed: currentStep > 3, active: currentStep === 3 }
   ];
-
+  
   useEffect(() => {
     if (showCompletionAnimation) {
       // Animate steps completing one by one
@@ -33,7 +29,7 @@ const ProgressionStatus: React.FC<ProgressionStatusProps> = ({
       const timer3 = setTimeout(() => {
         setAnimatedSteps([1, 2, 3]);
       }, 1000);
-
+  
       return () => {
         clearTimeout(timer1);
         clearTimeout(timer2);
@@ -41,12 +37,12 @@ const ProgressionStatus: React.FC<ProgressionStatusProps> = ({
       };
     }
   }, [showCompletionAnimation]);
-
+  
   const isStepAnimated = (stepId: number) => {
     return showCompletionAnimation ? animatedSteps.includes(stepId) : false;
   };
-
-  const getStepStatus = (step: any) => {
+  
+  const getStepStatus = (step: { id: number; completed: boolean; active: boolean }) => {
     if (showCompletionAnimation) {
       // On completion page, show animation for completed steps
       const isAnimated = isStepAnimated(step.id);
@@ -65,10 +61,10 @@ const ProgressionStatus: React.FC<ProgressionStatusProps> = ({
       };
     }
   };
-
+  
   return (
     <div className="flex items-center justify-center py-6">
-      <div className="flex items-center space-x-8 bg-[#273345] px-4 rounded-lg py-2">
+      <div className="flex items-center space-x-8 bg-[#273345] px-6 rounded-lg py-3">
         {steps.map((step, index) => {
           const status = getStepStatus(step);
           
@@ -81,7 +77,7 @@ const ProgressionStatus: React.FC<ProgressionStatusProps> = ({
                     ? 'bg-blue-600 text-white transform scale-110' 
                     : status.active 
                       ? 'bg-white text-slate-900' 
-                      : 'border text-gray-400'
+                      : 'border border-slate-600 text-gray-400'
                   }
                   ${showCompletionAnimation && status.completed ? 'animate-pulse' : ''}
                 `}>
@@ -120,6 +116,6 @@ const ProgressionStatus: React.FC<ProgressionStatusProps> = ({
       </div>
     </div>
   );
-};
+  };
 
 export default ProgressionStatus;

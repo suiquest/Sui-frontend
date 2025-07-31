@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { networkConfig, network } from "./contract";
 // import { Toaster } from "sonner";
 import "@mysten/dapp-kit/dist/index.css";
+import { TuskyProvider } from './context/TuskyClient'; 
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -20,7 +21,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <QueryClientProvider client={queryClient}>
       <SuiClientProvider networks={networkConfig} defaultNetwork={network}>
         <WalletProvider autoConnect={false}>
-          {children}
+          <TuskyProvider>
+            {children}
+          </TuskyProvider>
         </WalletProvider>
       </SuiClientProvider>
     </QueryClientProvider>

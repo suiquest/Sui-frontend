@@ -1,6 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { CheckCircle, Clock, Github, Paperclip } from "lucide-react";
+import { ConnectButton, useCurrentAccount } from "@mysten/dapp-kit";
 import Layout from '../components/common/Layout';
 import Group1Image from '../assets/Group 1.png';
 import ContainerImage from '../assets/Container.png';
@@ -11,6 +12,18 @@ import Users from '../assets/users.png';
 import Dollar from '../assets/dollar.png'
 
 const HomePage: React.FC = () => {
+  const account = useCurrentAccount();
+  const navigate = useNavigate();
+
+  const handleGetStarted = () => {
+    if (account?.address) {
+      // If wallet is connected, navigate to login
+      navigate('/profile-setup');
+
+    }
+    // If wallet is not connected, ConnectButton will handle the connection
+  };
+
   return (
     <Layout 
       navbarProps={{
@@ -37,12 +50,18 @@ const HomePage: React.FC = () => {
               </p>
               
               <div className="flex items-center gap-4">
-                <Link
-                  to="/login"
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-lg transition-colors"
-                >
-                  Get Started
-                </Link>
+                {account?.address ? (
+                  <button
+                    onClick={handleGetStarted}
+                    className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-lg transition-colors"
+                  >
+                    Get Started
+                  </button>
+                ) : (
+                  <ConnectButton className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-lg transition-colors">
+                    Connect Wallet
+                  </ConnectButton>
+                )}
                 <span className="text-gray-400 text-sm">
                   It will only take a minute
                 </span>

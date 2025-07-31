@@ -1,34 +1,10 @@
 // sui-quest\src\components\common\Navbar.tsx
 import React from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Logo from '/src/assets/Frame 10.svg'
+import { ConnectButton } from '@mysten/dapp-kit';
 
-interface NavbarProps {
-  showAuthButton?: boolean;
-  authButtonText?: string;
-  authButtonAction?: () => void;
-}
-
-const Navbar: React.FC<NavbarProps> = ({ 
-  showAuthButton = true, 
-  authButtonText = "Get Started",
-  authButtonAction
-}) => {
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const handleAuthClick = () => {
-    if (authButtonAction) {
-      authButtonAction();
-    } else {
-      // Default behavior based on current page
-      if (location.pathname === '/dashboard') {
-        navigate('/login');
-      } else {
-        navigate('/login');
-      }
-    }
-  };
+const Navbar: React.FC = () => {
 
   return (
     <header className="flex items-center justify-between px-42 py-4 bg-[#1d293d] sticky top-0 z-40">
@@ -61,18 +37,7 @@ const Navbar: React.FC<NavbarProps> = ({
       </nav>
 
       {/* Auth Button - Right */}
-      {showAuthButton && (
-        <button
-          onClick={handleAuthClick}
-          className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
-            location.pathname === '/dashboard'
-              ? 'bg-red-600 hover:bg-red-700'
-              : 'bg-[#4099ff] hover:bg-[#4099ff]'
-          }`}
-        >
-          {authButtonText}
-        </button>
-      )}
+      <ConnectButton className='bg-[#4099ff]'/>
     </header>
   );
 };
