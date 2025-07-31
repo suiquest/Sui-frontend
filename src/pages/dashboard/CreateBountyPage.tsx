@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowLeft, DollarSign, Upload, X } from 'lucide-react';
+import { ArrowLeft, Upload, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import DashboardNavbar from '../../components/common/DashboardNavbar';
 import DepositBountyModal from '../../components/modals/DepositBountyModal';
@@ -40,12 +40,6 @@ const CreateBountyPage: React.FC = () => {
 
   const categories = ['Development', 'Design', 'Content', 'Marketing', 'Other'];
   const availableSkills = ['Python', 'TypeScript', 'React', 'Rust', 'Solidity', 'UI/UX', 'Writing', 'Copywriting', 'Rive'];
-  const rewardTiers = [
-    { label: '1st', amount: '' },
-    { label: '2nd', amount: '' },
-    { label: '3rd', amount: '' },
-    { label: '4th', amount: '' }
-  ];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -393,7 +387,7 @@ const CreateBountyPage: React.FC = () => {
           category: formData.category,
           dueDate: formData.dueDate,
           organizationName: formData.organizationName,
-          organizationLogo: formData.organizationLogo
+          organizationLogo: formData.organizationLogo || undefined
         }}
         onDeposit={handleDepositComplete}
       />

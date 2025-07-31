@@ -4,7 +4,17 @@ import { Link } from 'react-router-dom';
 import Logo from '/src/assets/Frame 10.svg'
 import { ConnectButton } from '@mysten/dapp-kit';
 
-const Navbar: React.FC = () => {
+interface NavbarProps {
+  showAuthButton?: boolean;
+  authButtonText?: string;
+  authButtonAction?: () => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ 
+  showAuthButton = true,
+  authButtonText,
+  authButtonAction 
+}) => {
 
   return (
     <header className="flex items-center justify-between px-42 py-4 bg-[#1d293d] sticky top-0 z-40">
@@ -37,7 +47,18 @@ const Navbar: React.FC = () => {
       </nav>
 
       {/* Auth Button - Right */}
-      <ConnectButton className='bg-[#4099ff]'/>
+      {showAuthButton && (
+        authButtonAction ? (
+          <button 
+            onClick={authButtonAction}
+            className='bg-[#4099ff] px-4 py-2 rounded-md text-white hover:bg-blue-600 transition-colors'
+          >
+            {authButtonText || 'Connect Wallet'}
+          </button>
+        ) : (
+          <ConnectButton className='bg-[#4099ff]'/>
+        )
+      )}
     </header>
   );
 };

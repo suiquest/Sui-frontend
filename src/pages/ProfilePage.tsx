@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowLeft, Edit2, Camera, MapPin, Calendar, Award, LogOut, Clock } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { Edit2, Camera, MapPin, Calendar, Award, LogOut, Clock } from 'lucide-react';
 import DashboardNavbar from '../components/common/DashboardNavbar';
 
 interface UserProfile {
@@ -26,7 +25,6 @@ interface Submission {
 }
 
 const ProfilePage: React.FC = () => {
-  const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -82,25 +80,6 @@ const ProfilePage: React.FC = () => {
     }
   };
 
-  const generateActivityData = () => {
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    const currentYear = new Date().getFullYear();
-    
-    return months.map(month => {
-      const monthSubmissions = submissions.filter(sub => {
-        const subDate = new Date(sub.submittedDate);
-        return subDate.getMonth() === months.indexOf(month) && subDate.getFullYear() === currentYear;
-      });
-      
-      return {
-        month,
-        submissions: monthSubmissions.length
-      };
-    });
-  };
-
-  const activityData = generateActivityData();
-
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -134,39 +113,28 @@ const ProfilePage: React.FC = () => {
   };
 
   const handleLogout = () => {
-    // Clear all user-related data including wallet
-    localStorage.removeItem('userProfile');
-    localStorage.removeItem('walletAddress');
-    localStorage.removeItem('myListings');
-    localStorage.removeItem('selectedSkills');
-    localStorage.removeItem('userSubmissions');
-    localStorage.removeItem('jobListings');
+    // Handle logout logic
+    console.log('Logging out...');
+  };
+
+  const generateActivityData = () => {
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const currentYear = new Date().getFullYear();
     
-    // Clear wallet session data
-    localStorage.removeItem('sui-dapp-kit:wallet-connection-info');
-    localStorage.removeItem('sui-dapp-kit:last-connected-wallet-name');
-    localStorage.removeItem('sui-dapp-kit:auto-connect-enabled');
-    
-    // Clear any other wallet-related storage
-    Object.keys(localStorage).forEach(key => {
-      if (key.includes('wallet') || key.includes('sui') || key.includes('dapp-kit')) {
-        localStorage.removeItem(key);
-      }
+    return months.map(month => {
+      const monthSubmissions = submissions.filter(sub => {
+        const subDate = new Date(sub.submittedDate);
+        return subDate.getMonth() === months.indexOf(month) && subDate.getFullYear() === currentYear;
+      });
+      
+      return {
+        month,
+        submissions: monthSubmissions.length
+      };
     });
-    
-    // Navigate to home page
-    navigate('/');
   };
 
-  const handleLogoutConfirm = () => {
-    setShowLogoutConfirm(true);
-  };
-
-  const formatWalletAddress = (address: string): string => {
-    if (!address) return '';
-    if (address.length <= 10) return address;
-    return `${address.slice(0, 6)}...${address.slice(-4)}`;
-  };
+  const activityData = generateActivityData();
 
   if (!userProfile) {
     return (

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, DollarSign, AlertCircle, CheckCircle, Copy } from 'lucide-react';
+import { CheckCircle, Copy } from 'lucide-react';
 
 interface DepositBountyModalProps {
   isOpen: boolean;

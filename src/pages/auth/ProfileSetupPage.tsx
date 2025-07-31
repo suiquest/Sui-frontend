@@ -22,10 +22,9 @@ interface ProfileFormData {
 
 // Mock Tusky class for demonstration
 class Tusky {
-  private config: Record<string, unknown>;
-  
-  constructor(config: Record<string, unknown>) {
-    this.config = config;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  constructor(_config: Record<string, unknown>) {
+    // config is used in constructor but not stored as property
   }
   
   auth = {

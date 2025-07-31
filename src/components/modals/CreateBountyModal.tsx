@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, DollarSign, Zap } from 'lucide-react';
+import { X, DollarSign } from 'lucide-react';
 
 interface CreateBountyModalProps {
   isOpen: boolean;

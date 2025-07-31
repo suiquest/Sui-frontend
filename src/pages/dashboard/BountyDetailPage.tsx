@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Clock, Upload, Link, Calendar, Users, Award, Target } from 'lucide-react';
+import { Clock, Upload, Link, Calendar, Users, Target } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 import DashboardNavbar from '../../components/common/DashboardNavbar';
 
@@ -169,7 +169,7 @@ const BountyDetailPage = () => {
     return []; // Empty array if no submissions
   };
 
-  const [submissions, setSubmissions] = useState(getSubmissions());
+  const [submissions] = useState(getSubmissions());
 
   // Dynamic skill tags from bounty data
   const skillTags = bounty?.skillTags || bounty?.skills || ['Development', 'Design', 'Frontend'];
@@ -251,7 +251,7 @@ const BountyDetailPage = () => {
                 Skill Set
               </h3>
               <div className="flex flex-wrap gap-2">
-                {skillTags.map((skill, index) => (
+                {skillTags.map((skill: string, index: number) => (
                   <span
                     key={index}
                     className="bg-slate-700 text-gray-300 px-3 py-1 rounded-full text-sm"
@@ -287,7 +287,7 @@ const BountyDetailPage = () => {
               {submissions.length > 0 && (
                 <>
                   <div className="flex items-center gap-1 mb-2">
-                    {submissions.slice(0, 5).map((_, i) => (
+                    {submissions.slice(0, 5).map((_: any, i: number) => (
                       <div key={i} className="w-8 h-8 bg-gray-600 rounded-full"></div>
                     ))}
                     {submissions.length > 5 && (
@@ -297,7 +297,7 @@ const BountyDetailPage = () => {
                     )}
                   </div>
                   <p className="text-gray-400 text-xs">
-                    {submissions.slice(0, 3).map(s => s.submitter).join(', ')}
+                    {submissions.slice(0, 3).map((s: any) => s.submitter).join(', ')}
                     {submissions.length > 3 && ` & ${submissions.length - 3} others`}
                   </p>
                 </>
@@ -373,7 +373,7 @@ const BountyDetailPage = () => {
 
               {submissions.length > 0 ? (
                 <div className="space-y-4">
-                  {submissions.map((submission) => (
+                  {submissions.map((submission: any) => (
                     <div key={submission.id} className="bg-slate-800 rounded-lg p-4">
                       <div className="flex items-start justify-between">
                         <div className="flex-1">

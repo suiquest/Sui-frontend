@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { Search, Plus, List, HelpCircle, Upload } from 'lucide-react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React, { useState, useRef } from 'react';
+import { Search, Plus, List, HelpCircle, Eye } from 'lucide-react';
 import DashboardNavbar from '../../components/common/DashboardNavbar';
 
 interface Contributor {
@@ -13,10 +12,6 @@ interface Contributor {
 }
 
 const ListingDetailPage: React.FC = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const listing = location.state?.listing;
-
   // Get user profile from localStorage
   const getUserProfile = () => {
     const savedProfile = localStorage.getItem('userProfile');

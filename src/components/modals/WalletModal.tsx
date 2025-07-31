@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { X, ArrowRight } from 'lucide-react';
 
 interface WalletModalProps {
@@ -39,12 +39,6 @@ const WalletModal: React.FC<WalletModalProps> = ({
   };
 
   const userData = getUserData();
-
-  const formatWalletAddress = (address: string): string => {
-    if (!address) return '';
-    if (address.length <= 10) return address;
-    return `${address.slice(0, 6)}...${address.slice(-4)}`;
-  };
 
   const handleWithdraw = () => {
     if (onWithdraw) {

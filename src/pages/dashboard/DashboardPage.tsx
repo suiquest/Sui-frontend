@@ -28,12 +28,6 @@ interface RecentActivity {
   avatar: string;
 }
 
-interface UserProfile {
-  name: string;
-  role: string;
-  avatar?: string;
-}
-
 interface ProfileData {
   name: string;
   role: string;
