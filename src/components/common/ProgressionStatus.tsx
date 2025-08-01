@@ -63,16 +63,16 @@ const ProgressionStatus: React.FC<{
   };
   
   return (
-    <div className="flex items-center justify-center py-6">
-      <div className="flex items-center space-x-8 bg-[#273345] px-6 rounded-lg py-3">
+    <div className="flex items-center justify-center py-4 sm:py-6 px-4">
+      <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4 md:space-x-8 bg-[#273345] px-4 sm:px-6 rounded-lg py-4 sm:py-3 w-full max-w-md sm:max-w-none sm:w-auto">
         {steps.map((step, index) => {
           const status = getStepStatus(step);
           
           return (
-            <div key={step.id} className="flex items-center">
-              <div className="flex items-center space-x-3">
+            <div key={step.id} className="flex items-center w-full sm:w-auto">
+              <div className="flex items-center space-x-2 sm:space-x-3 flex-1 sm:flex-none">
                 <div className={`
-                  flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium transition-all duration-500
+                  flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 rounded-full text-xs sm:text-sm font-medium transition-all duration-500
                   ${status.completed 
                     ? 'bg-blue-600 text-white transform scale-110' 
                     : status.active 
@@ -82,7 +82,7 @@ const ProgressionStatus: React.FC<{
                   ${showCompletionAnimation && status.completed ? 'animate-pulse' : ''}
                 `}>
                   {status.completed ? (
-                    <Check className={`w-4 h-4 transition-all duration-300 ${
+                    <Check className={`w-3 h-3 sm:w-4 sm:h-4 transition-all duration-300 ${
                       showCompletionAnimation ? 'animate-bounce' : ''
                     }`} />
                   ) : (
@@ -94,7 +94,7 @@ const ProgressionStatus: React.FC<{
                   )}
                 </div>
                 <span className={`
-                  text-sm font-medium transition-all duration-300
+                  text-xs sm:text-sm font-medium transition-all duration-300
                   ${status.completed ? 'text-white' : status.active ? 'text-white' : 'text-gray-400'}
                   ${showCompletionAnimation && status.completed ? 'font-semibold' : ''}
                 `}>
@@ -103,11 +103,17 @@ const ProgressionStatus: React.FC<{
               </div>
               {index < steps.length - 1 && (
                 <div className={`
-                  w-16 h-px ml-6 transition-all duration-500
+                  transition-all duration-500
+                  ${/* Mobile: vertical line */ ''}
+                  sm:w-12 md:w-16 sm:h-px sm:ml-4 md:ml-6
+                  ${/* Mobile: horizontal line below */ ''}
+                  w-full h-px mt-4 sm:mt-0 sm:w-auto sm:h-auto
                   ${status.completed && steps[index + 1] && getStepStatus(steps[index + 1]).completed
                     ? 'bg-blue-500' 
                     : 'bg-slate-700'
                   }
+                  ${/* Hide on mobile for last connector */ ''}
+                  ${index === steps.length - 1 ? 'hidden' : 'block sm:block'}
                 `}></div>
               )}
             </div>

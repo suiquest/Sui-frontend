@@ -88,7 +88,7 @@ const Navbar: React.FC<NavbarProps> = ({
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 z-40 bg-black bg-opacity-50" onClick={toggleMobileMenu}>
+        <div className="md:hidden fixed inset-0 z-40 " onClick={toggleMobileMenu}>
           <div 
             className="absolute top-0 right-0 w-64 sm:w-72 h-full bg-[#1d293d] shadow-xl transform transition-transform duration-300 ease-in-out"
             onClick={(e) => e.stopPropagation()}

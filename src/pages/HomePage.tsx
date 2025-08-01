@@ -33,7 +33,7 @@ const HomePage: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10 lg:gap-12 items-center">
             
             {/* Left Content */}
-            <div className="space-y-6 md:space-y-8 text-center lg:text-left order-2 lg:order-1">
+            <div className="space-y-6 md:space-y-8 text-center lg:text-left order-1">
               <div>
                 <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight">
                   Contributor fuelling the{' '}
@@ -68,7 +68,7 @@ const HomePage: React.FC = () => {
             </div>
 
             {/* Right Content - Activity Feed */}
-            <div className="p-3 sm:p-4 md:p-6 order-1 lg:order-2">
+            <div className="p-3 sm:p-4 md:p-6 order-2">
               <div className="max-w-sm sm:max-w-md mx-auto space-y-2 sm:space-y-3">
                 
                 {/* Activity Item 1 */}
