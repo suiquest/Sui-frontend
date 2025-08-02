@@ -92,7 +92,7 @@ const WalletModal: React.FC<WalletModalProps> = ({
             <div className="text-sm font-medium text-gray-700 mb-2">Send to</div>
             <div className="bg-gray-50 border border-gray-200 rounded-lg p-3">
               <span className="text-gray-400 font-mono text-sm">
-                {userData.walletAddress ? userData.walletAddress : 'vdvijdvsoisdjojOJlOjojOjOlJOjoiJOjOjOjOjo'}
+                {userData.walletAddress ||  '' }
               </span>
             </div>
           </div>

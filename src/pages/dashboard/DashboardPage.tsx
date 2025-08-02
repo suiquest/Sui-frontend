@@ -56,11 +56,11 @@ const DashboardPage: React.FC = () => {
 
   // Check if user has completed profile setup
   useEffect(() => {
-    if (!userProfile.walletAddress || !userProfile.name) {
-      // Redirect to wallet connection if profile is incomplete
-      navigate('/');
-    }
-  }, [userProfile, navigate]);
+    // if (!userProfile.walletAddress || !userProfile.name) {
+    //   // Redirect to wallet connection if profile is incomplete
+    //   navigate('/');
+    // }
+  }, [userProfile]);
 
   // Create profile data from userProfile
   const [profile] = useState<ProfileData>({
