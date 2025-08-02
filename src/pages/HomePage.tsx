@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CheckCircle, Clock, Github, Paperclip } from "lucide-react";
+import { Clock, Github, Paperclip } from "lucide-react";
 import { ConnectButton, useCurrentAccount } from "@mysten/dapp-kit";
 import Layout from '../components/common/Layout';
 import Group1Image from '../assets/Group 1.png';

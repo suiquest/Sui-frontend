@@ -6,7 +6,7 @@ import { Transaction } from '@mysten/sui/transactions';
 import { testnet } from '../../contract/contract_testnet';
 
 // Types
-type AccountType = 'Contributor' | 'Funder' | null;
+// type AccountType = 'Contributor' | 'Funder' | null;
 
 interface Skill {
   id: string;
@@ -390,7 +390,7 @@ const UnifiedOnboardingPage: React.FC = () => {
 
       try {
         // Upload image to Tusky and get Walrus blob ID
-        addLog('Starting image upload to Tusky vault...');
+        addLog('Starting image upload to Walrus vault...');
         const blobId = await uploadImageToTusky(profileImage);
         setWalrusBlobId(blobId);
 

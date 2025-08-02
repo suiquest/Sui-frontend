@@ -10,3 +10,5 @@ export const testnet = {
     // Chain ID for testnet
     CHAIN_ID: "sui:testnet",
   };
+
+  
